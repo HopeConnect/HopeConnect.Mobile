@@ -63,9 +63,7 @@ export default function LoginScreen() {
             <TouchableOpacity style={{ padding: 10, backgroundColor: '#F3F3F3', borderRadius: 20, marginRight: 12 }}>
               <Image source={require('../assets/icons/google.png')} style={{ width: 40, height: 40 }} />
             </TouchableOpacity>
-            <TouchableOpacity style={{ padding: 10, backgroundColor: '#F3F3F3', borderRadius: 20, marginRight: 12 }}>
-              <Image source={require('../assets/icons/apple.png')} style={{ width: 40, height: 40 }} />
-            </TouchableOpacity>
+          
             <TouchableOpacity style={{ padding: 10, backgroundColor: '#F3F3F3', borderRadius: 20 }}>
               <Image source={require('../assets/icons/facebook.png')} style={{ width: 40, height: 40 }} />
             </TouchableOpacity>

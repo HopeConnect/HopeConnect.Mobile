@@ -67,9 +67,7 @@ export default function SignUpScreen() {
             <TouchableOpacity style={styles.iconContainer}>
               <Image source={require('../assets/icons/google.png')} style={styles.icon} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.iconContainer}>
-              <Image source={require('../assets/icons/apple.png')} style={styles.icon} />
-            </TouchableOpacity>
+         
             <TouchableOpacity style={styles.iconContainer}>
               <Image source={require('../assets/icons/facebook.png')} style={styles.icon} />
             </TouchableOpacity>
