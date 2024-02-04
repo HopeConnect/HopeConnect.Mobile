@@ -10,7 +10,7 @@ export default function WelcomeScreen() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: themeColors.bg }}>
             <View style={{ flex: 1, justifyContent: 'around', marginTop: 4 }}>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 34, textAlign: 'center',marginTop:50 }}>
+                <Text style={{ color: '#ff8d20', fontWeight: 'bold', fontSize: 34, textAlign: 'center',marginTop:50 }}>
                     Let's Get Started!
                 </Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center',marginTop:30 }}>
