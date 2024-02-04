@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { ScrollView, StyleSheet, TouchableOpacity ,Text, View, Image, BackHandler } from 'react-native';
 import {Provider as PaperProvider, Card, } from 'react-native-paper';
-import React from "react";
+import React , { useEffect }from "react";
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { Avatar, Button } from 'react-native-paper';
+import axios from 'axios';
 
 const LeftContent1 = props => <Image source={require("../assets/images/meal.png")} style={{marginTop:50,width:80,height:80}}  />
 const RightContent1 = props => <Text style={styles.txt}>Food</Text>
@@ -34,184 +35,181 @@ const LeftContent = props => <Image source={require("../assets/images/user.png")
 
 export default function App() {
   const navigation = useNavigation();
+  const [food, setFood] = React.useState([{}]);
+  const getFoodHelp = async () => {
+    const response = await axios.get('http://hopeconnect.somee.com/api/Food/GetAllFood', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.data.responseCode === 200) {
+      setFood(response.data.data);
+    }
+    else
+    {
+      console.log('Error');
+    }
+  };
 
+  useEffect(() => {
+    getFoodHelp();
+  }, []);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getFoodHelp();
+    });
+    return unsubscribe;
+  }, []);
   return (
-    
     <PaperProvider>
-     <ScrollView style={styles.container}>
-    
-     <SafeAreaView style={{ flex: 0}}>
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-          <TouchableOpacity
+      <ScrollView style={styles.container}>
+        <SafeAreaView style={{ flex: 0}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+            <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={{ backgroundColor: '#ff8d20', padding: 10, borderRadius: 50, marginLeft: 10 }}>
-            <ArrowLeftIcon size={23}  color="white" />
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-
-     <Text style={styles.txttop}>Food</Text>
-
-
-
-     <Card style={styles.cardBox}>
-    <Card.Title  left={LeftContent} />
-    <Card.Content>
-      <Text variant="titleLarge" style={styles.txt}>
-        John needs a meal urgently..
-        __________________________________
-
-       
-       
-        </Text>
-        
-   
-    </Card.Content>
-    <Text variant="bodyMedium" style={styles.txtdetail} >Name:</Text>
-    <Text variant="bodyMedium" style={styles.txtdetail} >Location:</Text>
-    <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>
-   
-    <Text style={styles.details}>
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        
-        </Text>
- 
-     
-        <TouchableOpacity  
-           onPress={() => navigation.navigate('Help')}
+              <ArrowLeftIcon size={23}  color="white" />
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+        <Text style={styles.txttop}>Food</Text>
+        {food && food.map((foodItem, index) => (
+          <Card style={styles.cardBox} key={index}>
+            <Card.Title  left={LeftContent} />
+            <Card.Content>
+              <Text variant="titleLarge" style={styles.txt} key={index}>
+                {foodItem.title}     __________________________________
+              </Text>
+            </Card.Content>
+            <Text variant="bodyMedium" style={styles.txtdetail} >Name: {foodItem.name}</Text>
+            <Text variant="bodyMedium" style={styles.txtdetail} >Location: {foodItem.location}</Text>
+            {/* <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text> */}
+            <Text style={styles.details}>
+                {foodItem.description}
+            </Text>  
+            <TouchableOpacity  
+            onPress={() => navigation.navigate('Help')}
             style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
                 HELP
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> 
+        </Card>
+        ))}
+
+    {/* <Card style={styles.cardBox}>
+      <Card.Title  left={LeftContent} />
+      <Card.Content>
+        <Text variant="titleLarge" style={styles.txt}>
+          John needs a meal urgently..
+          __________________________________
+
+        
+        
+          </Text>
+          
     
-  </Card>
-
+      </Card.Content>
+      <Text variant="bodyMedium" style={styles.txtdetail} >Name:</Text>
+      <Text variant="bodyMedium" style={styles.txtdetail} >Location:</Text>
+      <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>
+    
+      <Text style={styles.details}>
+          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
+          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
+          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
+          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
+          
+          </Text>
+  
       
+          <TouchableOpacity  
+            onPress={() => navigation.navigate('Help')}
+              style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
+                  HELP
+                </Text>
+              </TouchableOpacity>
+      
+    </Card>
 
+    
 
-  <Card style={styles.cardBox}>
-    <Card.Title  left={LeftContent} />
-    <Card.Content>
-      <Text variant="titleLarge" style={styles.txt}>
-        John needs a meal urgently..
-        __________________________________
+    <Card style={styles.cardBox}>
+      <Card.Title  left={LeftContent} />
+      <Card.Content>
+        <Text variant="titleLarge" style={styles.txt}>
+          John needs a meal urgently..
+          __________________________________
 
-       
-       
-        </Text>
         
-   
-    </Card.Content>
-    <Text variant="bodyMedium" style={styles.txtdetail} >Name:</Text>
-    <Text variant="bodyMedium" style={styles.txtdetail} >Location:</Text>
-    <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>
-   
-    <Text style={styles.details}>
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
         
-        </Text>
- 
-     
-        <TouchableOpacity  
+          </Text>
+          
+    
+      </Card.Content>
+      <Text variant="bodyMedium" style={styles.txtdetail} >Name:</Text>
+      <Text variant="bodyMedium" style={styles.txtdetail} >Location:</Text>
+      <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>
+    
+      <Text style={styles.details}>
+          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
+          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
+          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
+          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
+          
+          </Text>
+  
+      
+          <TouchableOpacity  
           onPress={() => navigation.navigate('Help')}
-            style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-                HELP
-              </Text>
-            </TouchableOpacity>
-    
-  </Card>
+              style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
+                  HELP
+                </Text>
+              </TouchableOpacity>
+      
+    </Card>
 
+    
+
+    <Card style={styles.cardBox}>
+      <Card.Title  left={LeftContent} />
+      <Card.Content>
+        <Text variant="titleLarge" style={styles.txt}>
+          John needs a meal urgently..
+          __________________________________
+
+        
+        
+          </Text>
+          
+    
+      </Card.Content>
+      <Text variant="bodyMedium" style={styles.txtdetail} >Name:</Text>
+      <Text variant="bodyMedium" style={styles.txtdetail} >Location:</Text>
+      <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>
+    
+      <Text style={styles.details}>
+          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
+          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
+          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
+          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
+          
+          </Text>
   
-
-  <Card style={styles.cardBox}>
-    <Card.Title  left={LeftContent} />
-    <Card.Content>
-      <Text variant="titleLarge" style={styles.txt}>
-        John needs a meal urgently..
-        __________________________________
-
-       
-       
-        </Text>
+      
+          <TouchableOpacity  
+            onPress={() => navigation.navigate('Help')}
+              style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
+                  HELP
+                </Text>
+              </TouchableOpacity>
+      
+    </Card> */}
         
-   
-    </Card.Content>
-    <Text variant="bodyMedium" style={styles.txtdetail} >Name:</Text>
-    <Text variant="bodyMedium" style={styles.txtdetail} >Location:</Text>
-    <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>
-   
-    <Text style={styles.details}>
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        
-        </Text>
- 
-     
-        <TouchableOpacity  
-         onPress={() => navigation.navigate('Help')}
-            style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-                HELP
-              </Text>
-            </TouchableOpacity>
-    
-  </Card>
-
-  
-
-  <Card style={styles.cardBox}>
-    <Card.Title  left={LeftContent} />
-    <Card.Content>
-      <Text variant="titleLarge" style={styles.txt}>
-        John needs a meal urgently..
-        __________________________________
-
-       
-       
-        </Text>
-        
-   
-    </Card.Content>
-    <Text variant="bodyMedium" style={styles.txtdetail} >Name:</Text>
-    <Text variant="bodyMedium" style={styles.txtdetail} >Location:</Text>
-    <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>
-   
-    <Text style={styles.details}>
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-        
-        </Text>
- 
-     
-        <TouchableOpacity  
-           onPress={() => navigation.navigate('Help')}
-            style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-                HELP
-              </Text>
-            </TouchableOpacity>
-    
-  </Card>
-      
-      
-      
-      
-      
-     
-     
-    </ScrollView>
+      </ScrollView>
     </PaperProvider>
   );
 }
