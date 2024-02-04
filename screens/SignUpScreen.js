@@ -7,7 +7,37 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
-
+  const [email, setEmail] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const handleRegister = async () => {
+    if (email === '' || password === '' || name === '') {
+      alert('Please enter your name, email and password.');
+      return;
+    }
+    else{
+      var response = await fetch('http://hopeconnect.somee.com/api/Auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          name: name,
+        }),
+      });
+      var data = await response.json();
+      if(data.responseCode === 200){
+        navigation.navigate('Login');
+        alert("Account created successfully");
+      }
+      else
+      {
+        alert(data.message);
+      }
+    }
+  };
   return (
     <View style={{ flex: 1, backgroundColor: themeColors.bg }}>
       <SafeAreaView style={{ flex: 0 }}>
@@ -30,26 +60,25 @@ export default function SignUpScreen() {
             <Text style={styles.formText}>Full Name</Text>
             <TextInput
               style={styles.input}
-              value="john snow"
-              placeholder='Enter Name'
+              onChangeText={(text) => setName(text)}
+              placeholder='Please enter your name'
             />
             <Text style={styles.formText}>Email Address</Text>
             <TextInput
               style={styles.input}
-              value="john@gmail.com"
-              placeholder='Enter Email'
+              onChangeText={(text) => setEmail(text)}
+              placeholder='Please enter your email address'
+              keyboardType='email-address'
+              
             />
             <Text style={styles.formText}>Password</Text>
             <TextInput
               style={styles.input}
               secureTextEntry
-              value="test12345"
-              placeholder='Enter Password'
+              onChangeText={(text) => setPassword(text)}
+              placeholder='Please enter your password'
             />
-            <TouchableOpacity
-              style={styles.signUpButton}
-              
-            >
+            <TouchableOpacity style={styles.signUpButton} onPress={handleRegister}>
               <Text style={styles.signUpButtonText}>
                 Sign Up
               </Text>

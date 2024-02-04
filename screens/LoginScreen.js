@@ -1,13 +1,68 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { themeColors } from '../theme';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {jwtDecode} from 'jwt-decode';
 
 export default function LoginScreen() {
+ 
   const navigation = useNavigation();
-
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const handleLogin = async () => {
+    try {
+      if (email === '' || password === '') {
+        alert('Please enter your username and password.');
+        return;
+      }
+      else{
+        const response = await fetch('http://hopeconnect.somee.com/api/Auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+            returnSecureToken: true,
+          }),
+        });
+        const data = await response.json();
+        if(data.responseCode === 200){
+          await AsyncStorage.setItem('userToken', data.data);
+          navigation.navigate('Tabs');
+        }
+        else
+        {
+          alert("Invalid Email or Password");
+        }
+      }
+    }
+    catch (error) {
+      console.log('Error:', error);
+    }
+  };
+  const checkUserToken = async () => {
+    const userToken = await AsyncStorage.getItem('userToken');
+      if (userToken) {
+        const decodedToken = jwtDecode(userToken);
+        const currentTimestamp = Math.floor(Date.now() / 1000);
+        if (decodedToken && decodedToken.exp && decodedToken.exp < currentTimestamp) {
+          await AsyncStorage.removeItem('userToken');
+          navigation.navigate('Login');
+        } else {
+          navigation.navigate('Tabs');
+        }
+      }
+      navigation.navigate('Login');
+  }
+  useEffect(() => {
+    // checkUserToken();
+  }, []);
+  
   return (
     <View style={{ flex: 1, backgroundColor: themeColors.bg }}>
       <SafeAreaView style={{ flex: 0}}>
@@ -29,8 +84,8 @@ export default function LoginScreen() {
             <Text style={{ color: 'black', marginLeft: 10 }}>Email Address</Text>
             <TextInput
               style={{ padding: 15, backgroundColor: '#F3F3F3', color: 'gray', borderRadius: 20, marginBottom: 10 }}
-              placeholder="email"
-              value="john@gmail.com"
+              placeholder="john@gmail.com"
+              onChangeText={(text) => setEmail(text)}
             />
           </View>
           <View style={{ marginBottom: 20 }}>
@@ -38,14 +93,14 @@ export default function LoginScreen() {
             <TextInput
               style={{ padding: 15, backgroundColor: '#F3F3F3', color: 'gray', borderRadius: 20 }}
               secureTextEntry
-              placeholder="password"
-              value="test12345"
+              placeholder="test12345"
+              onChangeText={(text) => setPassword(text)}
             />
             <TouchableOpacity style={{ alignSelf: 'flex-end' }}>
               <Text style={{ color: 'black', marginBottom: 10 }}>Forgot Password?</Text>
             </TouchableOpacity>
             <TouchableOpacity  
-            onPress={() => navigation.navigate('Tabs')}
+            onPress={() => handleLogin()}
             style={{ backgroundColor: '#ff8d20', borderRadius: 20, paddingVertical: 15, marginTop: 10 }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
                 LOGIN
