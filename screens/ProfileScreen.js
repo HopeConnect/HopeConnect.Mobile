@@ -9,9 +9,9 @@ import { useNavigation } from '@react-navigation/native';
 export default function App() {
     const navigation = useNavigation();
     const [user, setUser] = useState([]);
+    const [donationCount, setDonationCount] = useState([0]);
     const handleGetUser = async () => {
         var userToken = await AsyncStorage.getItem('userToken');
-        console.log("User Token: ", userToken);
         try 
         {
             var response = await axios.get('http://hopeconnect.somee.com/api/User/GetUserByUserFirebaseId', {
@@ -20,10 +20,8 @@ export default function App() {
                     Authorization: `Bearer ${userToken}`,
                 }
             });
-            console.log("Response: ", response);
             if (response.data.responseCode === 200) {
                 setUser(response.data.data);
-                console.log("Response: ", response.data.data);
             }
             else
             {
@@ -42,7 +40,6 @@ export default function App() {
     };
     const handeDeleteAccount = async () => {
         var userToken = await AsyncStorage.getItem('userToken');
-        console.log("User Token: ", userToken);
         try 
         {
             var response = await axios.delete('http://hopeconnect.somee.com/api/Auth/Delete', {
@@ -51,7 +48,6 @@ export default function App() {
                     Authorization: `Bearer ${userToken}`,
                 }
             });
-            console.log("Response: ", response);
             if (response.data.responseCode === 200) {
                 await AsyncStorage.removeItem('userToken');
                 navigation.navigate('Login');
@@ -66,12 +62,37 @@ export default function App() {
             console.log(error);
         }
     };
+    const handleGetDonationCount = async () => {
+        var userToken = await AsyncStorage.getItem('userToken');
+        try 
+        {
+            var response = await axios.get('http://hopeconnect.somee.com/api/UserActivitiy/GetDonationCount', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${userToken}`,
+                }
+            });
+            if (response.data.responseCode === 200) {
+                setDonationCount(response.data.data);
+            }
+            else
+            {
+                console.log(response.data.responseMessage);
+            }
+        }
+        catch (error) 
+        {
+            console.log(error);
+        }
+    };
     useEffect(() => {
         handleGetUser();
+        handleGetDonationCount();
     }, []);
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             handleGetUser();
+            handleGetDonationCount();
         });
         return unsubscribe;
     }, []);
@@ -95,7 +116,7 @@ export default function App() {
                         <Text style={[styles.text, styles.subText]}>Posts</Text>
                     </View>
                     <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                        <Text style={[styles.text, { fontSize: 24 }]}>45,844</Text>
+                        <Text style={[styles.text, { fontSize: 24 }]}>{donationCount}</Text>
                         <Text style={[styles.text, styles.subText]}>Helps</Text>
                     </View>
                     <View style={styles.statsBox}>
