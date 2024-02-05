@@ -56,20 +56,22 @@ export default function AppNavigation() {
     );
   }
   else{
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='Welcome'>
-        <Stack.Screen name="Home" options={{headerShown: false}} component={HomeScreen} />
-        <Stack.Screen name="Welcome" options={{headerShown: false}} component={WelcomeScreen} />
-        <Stack.Screen name="Login" options={{headerShown: false}} component={LoginScreen} />
-        <Stack.Screen name="SignUp" options={{headerShown: false}} component={SignUpScreen} />
-        <Stack.Screen name="Tabs" options={{headerShown: false}} component={Tabs}/>
-        <Stack.Screen name="SecondHome" options={{headerShown: false}} component={SecondHome}/>
-        <Stack.Screen name="FoodDetails" options={{headerShown: false}}  component={FoodDetails}/>
-        <Stack.Screen name="ClothesDetails" options={{headerShown: false}}  component={ClothesDetails}/>
-        <Stack.Screen name="EducationDetails" options={{headerShown: false}}  component={EducationDetails}/>
-        <Stack.Screen name="AccomodationDetails" options={{headerShown: false}}  component={AccomodationDetails}/>
-        <Stack.Screen name="Help" options={{headerShown: false}}  component={Help}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName='Welcome'>
+          <Stack.Screen name="Home" options={{headerShown: false}} component={HomeScreen} />
+          <Stack.Screen name="Welcome" options={{headerShown: false}} component={WelcomeScreen} />
+          <Stack.Screen name="Login" options={{headerShown: false}} component={LoginScreen} />
+          <Stack.Screen name="SignUp" options={{headerShown: false}} component={SignUpScreen} />
+          <Stack.Screen name="Tabs" options={{headerShown: false}} component={Tabs}/>
+          <Stack.Screen name="SecondHome" options={{headerShown: false}} component={SecondHome}/>
+          <Stack.Screen name="FoodDetails" options={{headerShown: false}}  component={FoodDetails}/>
+          <Stack.Screen name="ClothesDetails" options={{headerShown: false}}  component={ClothesDetails}/>
+          <Stack.Screen name="EducationDetails" options={{headerShown: false}}  component={EducationDetails}/>
+          <Stack.Screen name="AccomodationDetails" options={{headerShown: false}}  component={AccomodationDetails}/>
+          <Stack.Screen name="Help" options={{headerShown: false}}  component={Help}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
   }
 }

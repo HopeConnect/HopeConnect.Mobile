@@ -1,31 +1,94 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function App() {
+    const navigation = useNavigation();
+    const [user, setUser] = useState([]);
+    const handleGetUser = async () => {
+        var userToken = await AsyncStorage.getItem('userToken');
+        console.log("User Token: ", userToken);
+        try 
+        {
+            var response = await axios.get('http://hopeconnect.somee.com/api/User/GetUserByUserFirebaseId', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${userToken}`,
+                }
+            });
+            console.log("Response: ", response);
+            if (response.data.responseCode === 200) {
+                setUser(response.data.data);
+                console.log("Response: ", response.data.data);
+            }
+            else
+            {
+                console.log("Response: ", response.data.data);
+            }
+        }
+        catch (error) 
+        {
+            console.log(error);
+        }
+            
+    };
+    const handleSignOut = async () => {
+        await AsyncStorage.removeItem('userToken');
+        navigation.navigate('Login');
+    };
+    const handeDeleteAccount = async () => {
+        var userToken = await AsyncStorage.getItem('userToken');
+        console.log("User Token: ", userToken);
+        try 
+        {
+            var response = await axios.delete('http://hopeconnect.somee.com/api/Auth/Delete', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${userToken}`,
+                }
+            });
+            console.log("Response: ", response);
+            if (response.data.responseCode === 200) {
+                await AsyncStorage.removeItem('userToken');
+                navigation.navigate('Login');
+            }
+            else
+            {
+                console.log(response.data.responseMessage);
+            }
+        }
+        catch (error) 
+        {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        handleGetUser();
+    }, []);
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            handleGetUser();
+        });
+        return unsubscribe;
+    }, []);
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                
-
                 <View style={{ alignSelf: "center" }}>
                     <View style={styles.profileImage}>
-                        <Image source={require("../assets/images/hopelogo.jpeg")} style={styles.image} resizeMode="center"></Image>
+                        <Image source={{uri: user.userImageUrl}} style={styles.image} resizeMode="center"></Image>
                     </View>
-                    
-                  
                     <View style={styles.add}>
                         <Ionicons name="ios-add" size={48} color="white" style={{ marginTop: 2, marginLeft: 3,fontWeight:'bold' }}></Ionicons>
                     </View>
                 </View>
-
                 <View style={styles.infoContainer}>
-                    <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>Julie Wick</Text>
-  
+                    <Text style={[styles.text, { fontWeight: "200", fontSize: 28 }]}>{user.fullName}</Text>
                 </View>
-
-                
-
                 <View style={styles.statsContainer}>
                     <View style={styles.statsBox}>
                         <Text style={[styles.text, { fontSize: 24 }]}>483</Text>
@@ -40,49 +103,32 @@ export default function App() {
                         <Text style={[styles.text, styles.subText]}>Comment</Text>
                     </View>
                 </View>
-
-                
                 <View style={styles.infoContainer2}>
-                    <Text style={[styles.text, { fontWeight: "200", fontSize: 20, marginLeft:10,marginTop:10,color:'#ff8d20' }]}>Country: <Text style={{color:'#52575D'}}>Norway</Text> </Text>
-                    <Text style={[styles.text, { fontWeight: "200", fontSize: 20, marginLeft:10,marginTop:10 }]}>City: Oslo</Text>
-                    <Text style={[styles.text, { fontWeight: "200", fontSize: 20, marginLeft:10,marginTop:10}]}>Age: 23</Text>
+                    <Text style={[styles.text, { fontWeight: "200", fontSize: 20, marginLeft:10,marginTop:10,color:'#ff8d20' }]}>Country: <Text style={{color:'#52575D'}}>{user.country}</Text> </Text>
+                    <Text style={[styles.text, { fontWeight: "200", fontSize: 20, marginLeft:10,marginTop:10, color:'#ff8d20'}]}>City:  <Text style={{color:'#52575D'}}>{user.city}</Text></Text>
+                    <Text style={[styles.text, { fontWeight: "200", fontSize: 20, marginLeft:10,marginTop:10, color:'#ff8d20'}]}>Age: <Text style={{color:'#52575D'}}>{user.age}</Text></Text>
                 </View>
-
                 <TouchableOpacity
-                        
-                        style={{ paddingVertical: 10, backgroundColor: '#ff8d20', marginHorizontal: 7, borderRadius: 20,marginTop:30  }}
-                    >
-                        <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
+                style={{ paddingVertical: 10, backgroundColor: '#ff8d20', marginHorizontal: 7, borderRadius: 20,marginTop:30  }}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
                         <Ionicons name="create-outline"  size={24} color="white"></Ionicons>
-                        
-                            Edit Profile
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        
-                        style={{ paddingVertical: 10, backgroundColor: '#ff8d20', marginHorizontal: 7, borderRadius: 20,marginTop:10  }}
-                    >
-                        <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
+                        Edit Profile
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handeDeleteAccount}
+                style={{paddingVertical: 10, backgroundColor: '#ff8d20', marginHorizontal: 7, borderRadius: 20,marginTop:10  }}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
                         <Ionicons name="close-outline"   size={24} color="white"></Ionicons>
-                       
-                            Delete Account
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        
-                        style={{ paddingVertical: 10, backgroundColor: '#ff8d20', marginHorizontal: 7, borderRadius: 20,marginTop:10  }}
-                    >
-                        <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
+                        Delete Account
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleSignOut}
+                style={{ paddingVertical: 10, backgroundColor: '#ff8d20', marginHorizontal: 7, borderRadius: 20,marginTop:10  }}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
                         <Ionicons name="log-out-outline"   size={24} color="white"></Ionicons>
-                       
-                            Sign Out
-                        </Text>
-                    </TouchableOpacity>
-
-
-               
+                         Sign Out
+                    </Text>
+                </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     );

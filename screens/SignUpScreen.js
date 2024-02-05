@@ -24,7 +24,7 @@ export default function SignUpScreen() {
         body: JSON.stringify({
           email: email,
           password: password,
-          name: name,
+          fullName: name,
         }),
       });
       var data = await response.json();
