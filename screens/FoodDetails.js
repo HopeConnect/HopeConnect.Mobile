@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { Avatar, Button } from 'react-native-paper';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LeftContent1 = props => <Image source={require("../assets/images/meal.png")} style={{marginTop:50,width:80,height:80}}  />
 const RightContent1 = props => <Text style={styles.txt}>Food</Text>
@@ -37,9 +38,11 @@ export default function App() {
   const navigation = useNavigation();
   const [food, setFood] = React.useState([{}]);
   const getFoodHelp = async () => {
+    var userToken = await AsyncStorage.getItem('userToken');
     const response = await axios.get('http://hopeconnect.somee.com/api/Food/GetAllFood', {
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`,
       },
     });
     if (response.data.responseCode === 200) {
@@ -47,7 +50,7 @@ export default function App() {
     }
     else
     {
-      console.log('Error');
+      console.log(response.data.message);
     }
   };
 
@@ -88,7 +91,7 @@ export default function App() {
                 {foodItem.description}
             </Text>  
             <TouchableOpacity  
-            onPress={() => navigation.navigate('Help')}
+            onPress={() => navigation.navigate('Help', {Id: foodItem.id, type: 'Foods'})}
             style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
                 HELP

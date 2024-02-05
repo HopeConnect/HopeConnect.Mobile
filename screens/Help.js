@@ -5,7 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
 import {Provider as PaperProvider, Card, } from 'react-native-paper';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const LeftContent2 = props => <Image source={require("../assets/images/helping-hand.png")} style={{width:70,height:70,marginBottom:10,marginLeft:170,marginTop:10}}  />
 
 
@@ -13,15 +15,42 @@ const LeftContent2 = props => <Image source={require("../assets/images/helping-h
 const RightContent1 = props => <Text style={styles.txt}>$25</Text>
 
 
-export default function SignUpScreen() {
-  const navigation = useNavigation();2
-
-  const [selectedCard, setSelectedCard] = useState(null);
-
+export default function SignUpScreen({route}) {
+  const navigation = useNavigation();
+  // const [selectedCard, setSelectedCard] = useState(null);
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [city, setCity] = useState('');
+  const [message, setMessage] = useState('');
+  const [donationAmount, setDonationAmount] = useState('');
   const handleCardPress = (cardValue) => {
-    setSelectedCard(cardValue);
+    setDonationAmount(cardValue);
   };
-
+  const handleDonationAdd = async () => {
+    var userToken = await AsyncStorage.getItem('userToken');
+    const response = await axios.post('http://www.hopeconnect.somee.com/api/UserActivitiy/UserActivityAdd', {
+      name: name,
+      surname: surname,
+      city: city,
+      message: message,
+      activityId: parseInt(route.params.Id),
+      donationAmount: parseFloat(donationAmount),
+      donationType: route.params.type,
+    },
+    {
+      headers: {
+        'Authorization': `Bearer ${userToken}`,
+      },
+    });
+    if (response.data.responseCode === 200) {
+      console.log(response.data.message);
+      navigation.navigate('Tabs');
+    }
+    else
+    {
+      console.log('Error', response.data.message);
+    }
+  }
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
       <SafeAreaView style={{ flex: 0 }}>
@@ -39,42 +68,36 @@ export default function SignUpScreen() {
       <SafeAreaView style={{ flex: 1, borderTopLeftRadius: 50, borderTopRightRadius: 50, backgroundColor: 'white' }}>
         <View style={{ alignItems: 'center', justifyContent: 'center'}}>
         <Text style={styles.txttop}>Help</Text>
-       
-        <Card.Title
-        left={LeftContent2} />
-
-         
+        <Card.Title left={LeftContent2} />
         </View>
 
         <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 8 }}>
-          <View style={styles.form}>
-          
+          <View style={styles.form}>   
             <TextInput
               style={styles.input}
               placeholder='Name'
-            />
-          
+              onChangeText={text => setName(text)}
+            />    
             <TextInput
               style={styles.input}      
               placeholder='Surname'
+              onChangeText={text => setSurname(text)}
             />
-   
             <TextInput
               style={styles.input}
               placeholder='City'
+              onChangeText={text => setCity(text)}
             />
-
-
-
             <TextInput
               style={styles.inputmsg}
               placeholder='Message'
+              onChangeText={text => setMessage(text)}
             />
 
         <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 20,marginTop:20 }}>
             <TouchableOpacity style={{ 
                 padding: 30, 
-                backgroundColor: selectedCard === 100 ? '#ff8d20' : '#F3F3F3',
+                backgroundColor: donationAmount === 100 ? '#ff8d20' : '#F3F3F3',
                 borderRadius: 20, 
                 marginRight: 12 
             }}
@@ -83,7 +106,7 @@ export default function SignUpScreen() {
             <Text style={styles.moneytxt}>$100</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{ padding: 30, 
-               backgroundColor: selectedCard === 150 ? '#ff8d20' : '#F3F3F3',
+               backgroundColor: donationAmount === 150 ? '#ff8d20' : '#F3F3F3',
                  borderRadius: 20, 
                  marginRight: 12 
                  }}
@@ -93,7 +116,7 @@ export default function SignUpScreen() {
             </TouchableOpacity>
             <TouchableOpacity style={{ padding: 30, 
                 textAlign:'center', 
-                backgroundColor: selectedCard === 200 ? '#ff8d20' : '#F3F3F3',
+                backgroundColor: donationAmount === 200 ? '#ff8d20' : '#F3F3F3',
                  borderRadius: 20,
             
                  }}
@@ -119,21 +142,16 @@ export default function SignUpScreen() {
           <TextInput
               style={styles.input}
               placeholder='Enter Price Manually'
+              onChangeText={text => setDonationAmount(text)}
             />
-
             <TouchableOpacity
-              style={styles.signUpButton}
-              
+              style={styles.signUpButton} onPress={() => handleDonationAdd()}
             >
               <Text style={styles.signUpButtonText}>
                 SEND
               </Text>
             </TouchableOpacity>
           </View>
-        
-        
-         
-          
         </View>
       </SafeAreaView>
     </View>

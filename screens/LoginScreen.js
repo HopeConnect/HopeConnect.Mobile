@@ -6,6 +6,7 @@ import { themeColors } from '../theme';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
+import axios from 'axios';
 
 export default function LoginScreen() {
  
@@ -19,30 +20,29 @@ export default function LoginScreen() {
         return;
       }
       else{
-        const response = await fetch('http://hopeconnect.somee.com/api/Auth/login', {
-          method: 'POST',
+        const response = await axios.post('http://hopeconnect.somee.com/api/Auth/Login', {
+          email: email,
+          password: password,
+          returnSecureToken: true,
+        },
+        {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-            returnSecureToken: true,
-          }),
         });
-        const data = await response.json();
-        if(data.responseCode === 200){
-          await AsyncStorage.setItem('userToken', data.data);
+        if (response.data.responseCode === 200) {
+          await AsyncStorage.setItem('userToken', response.data.data);
+          console.log(response.data.data);
           navigation.navigate('Tabs');
         }
         else
         {
-          alert("Invalid Email or Password");
+          alert('Error! :', response.data.message);
         }
       }
     }
     catch (error) {
-      console.log('Error:', error);
+      console.log('Error! :', error);
     }
   };
   const checkUserToken = async () => {

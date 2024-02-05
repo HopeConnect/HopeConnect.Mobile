@@ -37,9 +37,11 @@ export default function App() {
   const navigation = useNavigation();
   const [accomodation, setAccomodation] = React.useState([{}]);
   const getAccomodationHelp = async () => {
+    var userToken = await AsyncStorage.getItem('userToken');
     const response = await axios.get('http://hopeconnect.somee.com/api/Accommodation/GetAllAccommodation', {
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + userToken
       },
     });
     if (response.data.responseCode === 200) {
@@ -47,7 +49,7 @@ export default function App() {
     }
     else
     {
-      console.log('Error');
+      console.log(response.data.message);
     }
   };
   useEffect(() => {
@@ -82,7 +84,7 @@ export default function App() {
             {accomodationItem.description}
           </Text> 
           <TouchableOpacity  
-          onPress={() => navigation.navigate('Help')}
+          onPress={() => navigation.navigate('Help', {Id: accomodationItem.id, type: 'Accomodation'})}
           style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
               HELP
