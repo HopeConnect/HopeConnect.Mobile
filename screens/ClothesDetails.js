@@ -85,12 +85,12 @@ export default function App() {
               {clotheItem.description}
             </Text>
             <TouchableOpacity  
-                onPress={() => navigation.navigate('Help', {Id: clotheItem.id, type: 'Clothes'})}
-                style={styles.touchbutton}>
-                  <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-                    HELP
-                  </Text>
-            </TouchableOpacity>
+            onPress={() => navigation.navigate('Help', {Id: foodItem.id, type: 'Foods'})}
+            style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
+              <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
+                HELP
+              </Text>
+            </TouchableOpacity> 
           </Card>
         ))}
   {/* 
@@ -220,8 +220,7 @@ export default function App() {
 const styles = StyleSheet.create({
   cardBox:{
     margin:10,
-    backgroundColor:'#ff8d20',
-   
+    backgroundColor:'white',     
   },
 
   txt:{
@@ -241,8 +240,7 @@ const styles = StyleSheet.create({
     color:'black',
     marginBottom:20,
     fontWeight: 'bold',
-    textAlign:'center',
-    color:'black'
+    textAlign:'center'
   },
 
 
@@ -251,7 +249,7 @@ const styles = StyleSheet.create({
     marginTop:15,
     marginLeft:10,
     fontWeight:'bold',
-    color:'black',
+    color:'#ff8d20',
   },
 
   txtdetail2:{
@@ -265,17 +263,5 @@ const styles = StyleSheet.create({
     marginTop:11,
     textAlign:'center',
     padding:12
-  },
-
-  touchbutton:{
-    backgroundColor: '#224153', 
-    borderRadius: 30, 
-    marginBottom:10, 
-    paddingVertical: 10, 
-    marginTop: 10,
-    marginBottom:15
   }
-
-
-
 });

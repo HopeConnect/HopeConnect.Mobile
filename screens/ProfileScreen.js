@@ -184,9 +184,9 @@ const styles = StyleSheet.create({
     profileImage: {
         width: 200,
         height: 200,
-        borderRadius: 100,
+        borderRadius: 200,
         overflow: "hidden",
-        marginTop:50
+       marginTop:5
     },
     dm: {
         backgroundColor: "#41444B",
