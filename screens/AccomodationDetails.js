@@ -32,7 +32,10 @@ const RightContent4 = props => <Text style={styles.txt}>Accomodation</Text>
 };
 */
 
-const LeftContent = props => <Image source={require("../assets/images/user.png")} style={{marginTop:15,width:60,height:60}}  />
+// const LeftContent = props => <Image source={require("../assets/images/user.png")} style={{marginTop:15,width:60,height:60}}  />
+const LeftContent = ({ imageUrl }) => (
+  <Image source={{ uri: imageUrl }} style={{ marginTop: 40, width: 100, height: 100, borderRadius: 15 }} />
+);
 
 export default function App() {
   const navigation = useNavigation();
@@ -47,6 +50,7 @@ export default function App() {
     });
     if (response.data.responseCode === 200) {
       setAccomodation(response.data.data);
+      console.log("Accomodation: ", accomodation);
     }
     else
     {
@@ -72,14 +76,14 @@ export default function App() {
         <Text style={styles.txttop}>Accomodation</Text>
         {accomodation && accomodation.map((accomodationItem, index) => (
         <Card style={styles.cardBox} key={index}>
-          <Card.Title  left={LeftContent} />
+          <Card.Title left={() => <LeftContent imageUrl={accomodationItem.imageUrl} />} />
           <Card.Content>
             <Text variant="titleLarge" style={styles.txt} key={index}>
-              {accomodationItem.title} __________________________________
+              {accomodationItem.title} ____________________________
             </Text>
           </Card.Content>
           <Text variant="bodyMedium" style={styles.txtdetail} >Name: {accomodationItem.name} </Text>
-          <Text variant="bodyMedium" style={styles.txtdetail} >Location: {accomodationItem.location}</Text>
+          <Text variant="bodyMedium" style={styles.txtdetail2} >Location: {accomodationItem.location}</Text>
           {/* <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>   */}
           <Text style={styles.details}>
             {accomodationItem.description}
@@ -108,12 +112,12 @@ const styles = StyleSheet.create({
   },
 
   txt:{
-    marginTop:-50,
+    marginTop:-40,
     textAlign:'center',
     fontSize:18,
     color:'black',
     fontWeight: 'bold',
-    marginLeft:50
+    marginLeft:110
      
   },
 
@@ -131,7 +135,7 @@ const styles = StyleSheet.create({
 
   txtdetail:{
     fontSize:18,
-    marginTop:15,
+    marginTop:39,
     marginLeft:10,
     fontWeight:'bold',
     color:'#ff8d20',
@@ -140,8 +144,11 @@ const styles = StyleSheet.create({
   txtdetail2:{
     fontSize:15,
     fontWeight:'bold',
-    textAlign:'right',
-    marginRight:100
+    marginTop:10,
+    marginLeft:10,
+    // fontWeight:'bold',
+    // textAlign:'right',
+    // marginRight:100
   },
 
   details:{
