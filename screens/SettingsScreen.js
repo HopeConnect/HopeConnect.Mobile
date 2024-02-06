@@ -53,7 +53,6 @@ export default function App() {
       console.log(response.data.message);
     }
   };
-
   useEffect(() => {
     getDonationArchive();
   }, []);
@@ -80,132 +79,12 @@ export default function App() {
             </Card.Content>
             <Text variant="bodyMedium" style={styles.txtdetail} >Name: {donationArchiveItem.name}</Text>
             <Text variant="bodyMedium" style={styles.txtdetail} >Location: {donationArchiveItem.location}</Text>
-            {/* <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text> */}
+            <Text variant="bodyMedium" style={styles.txtdetail} >Location: {donationArchiveItem.activityId}</Text>
             <Text style={styles.details}>
               {donationArchiveItem.description}
             </Text>
-           
           </Card>
         ))}
-  {/* 
-    <Card style={styles.cardBox}>
-      <Card.Title  left={LeftContent} />
-      <Card.Content>
-        <Text variant="titleLarge" style={styles.txt}>
-          John needs a meal urgently..
-          __________________________________
-
-        
-        
-          </Text>
-          
-    
-      </Card.Content>
-      <Text variant="bodyMedium" style={styles.txtdetail} >Name:</Text>
-      <Text variant="bodyMedium" style={styles.txtdetail} >Location:</Text>
-      <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>
-    
-      <Text style={styles.details}>
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          
-          </Text>
-  
-      
-          <TouchableOpacity  
-              onPress={() => navigation.navigate('Help')}
-              style={styles.touchbutton}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-                  HELP
-                </Text>
-              </TouchableOpacity>
-      
-    </Card>
-
-    
-
-    <Card style={styles.cardBox}>
-      <Card.Title  left={LeftContent} />
-      <Card.Content>
-        <Text variant="titleLarge" style={styles.txt}>
-          John needs a meal urgently..
-          __________________________________
-
-        
-        
-          </Text>
-          
-    
-      </Card.Content>
-      <Text variant="bodyMedium" style={styles.txtdetail} >Name:</Text>
-      <Text variant="bodyMedium" style={styles.txtdetail} >Location:</Text>
-      <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>
-    
-      <Text style={styles.details}>
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          
-          </Text>
-  
-      
-          <TouchableOpacity  
-              onPress={() => navigation.navigate('Help')}
-            style={styles.touchbutton}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-                  HELP
-                </Text>
-              </TouchableOpacity>
-      
-    </Card>
-
-    
-
-    <Card style={styles.cardBox}>
-      <Card.Title  left={LeftContent} />
-      <Card.Content>
-        <Text variant="titleLarge" style={styles.txt}>
-          John needs a meal urgently..
-          __________________________________
-
-        
-        
-          </Text>
-          
-    
-      </Card.Content>
-      <Text variant="bodyMedium" style={styles.txtdetail} >Name:</Text>
-      <Text variant="bodyMedium" style={styles.txtdetail} >Location:</Text>
-      <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>
-    
-      <Text style={styles.details}>
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          
-          </Text>
-  
-      
-          <TouchableOpacity  
-              onPress={() => navigation.navigate('Help')}
-              style={styles.touchbutton}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-                  HELP
-                </Text>
-              </TouchableOpacity>
-      
-    </Card>
-        */}
-        
-        
-        
-        
-      
-      
       </ScrollView>
     </PaperProvider>
   );
