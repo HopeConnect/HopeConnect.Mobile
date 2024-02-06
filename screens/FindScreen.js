@@ -1,97 +1,68 @@
-import { View, Text,StyleSheet } from 'react-native'
-import React, { useState } from 'react'
-import MapView,{Marker} from 'react-native-maps';
+import { View, Text, StyleSheet } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import MapView, { Marker } from 'react-native-maps';
 import { StatusBar } from 'expo-status-bar';
-
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function FindScreen() {
+  const [markers, setMarkers] = useState([{
+    latitude: 40.774021,
+    longitude: 29.918631,
+  }]);
 
-let [markers, setMarkers] = useState([ 
-  {
-    lat:40.774021,
-    long:29.918631,
-  },
+  const GetRecipientLatitudeAndLongitude = async () => {
+    var userToken = await AsyncStorage.getItem('userToken');
+    const response = await axios.get('http://hopeconnect.somee.com/api/Recipient/GetRecipientLatitudeAndLongitude', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + userToken
+      },
+    });
+    console.log(response.data.data);
+    if (response.data.responseCode === 200) {
+      const parsedMarkers = response.data.data.map(coord => ({
+        latitude: parseFloat(coord.latitude),
+        longitude: parseFloat(coord.longitude)
+      }));
+      setMarkers(parsedMarkers);
+      console.log("Location: ", parsedMarkers);
+    } else {
+      console.log(response.data.message);
+    }
+  };
 
-  {
-    lat:39.933365,
-    long:32.859741,
-  },
-
-  {
-    lat:41.002697,
-    long:39.716763,
-  },
-
-  {
-    lat:52.229675,
-    long:21.012230,
-  },
-
-  {
-    lat:50.087811,
-    long:14.420460,
-  },
-
-  {
-    lat:59.911491,
-    long:10.757933,
-  },
-
-  {
-    lat:55.676098,
-    long:12.568337,
-  },
-
-  {
-    lat:48.864716,
-    long:2.349014,
-  },
-
-  {
-    lat:45.464664,
-    long:9.188540,
-  },
-
-  {
-    lat:44.439663,
-    long:26.096306,
-  },
-  {
-    lat: 37.0121964,
-    long: 35.2728561,
-  }
-]);
-
-
+  useEffect(() => {
+    GetRecipientLatitudeAndLongitude();
+  }, []);
 
   return (
     <View style={styles.container}>
-    
       <StatusBar style='auto' />
-      <MapView style={styles.map}> 
-        {
-          markers.map((e,i)=>(
-            
-            <Marker coordinate={{latitude:e.lat, longitude:e.long}} />
-          ))
-        }
+      <MapView style={styles.map}>
+        {markers.map((marker, index) => (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: marker.latitude,
+              longitude: marker.longitude
+            }}
+          />
+        ))}
       </MapView>
-
     </View>
   )
 }
 
-const styles=StyleSheet.create({
-  container:{
-    flex:1,
-    backgroundColor:'#fff',
-    alignItems:'center',
-    justifyContent:'center'
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-
-  map:{
-    width:"100%",
-    height:"100%"
+  map: {
+    width: "100%",
+    height: "100%"
   },
-
 });
