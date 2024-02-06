@@ -87,6 +87,7 @@ export default function App() {
             <Text variant="bodyMedium" style={styles.txtdetail} >Name: {donationArchiveItem.name}</Text>
             <Text variant="bodyMedium" style={styles.txtdetail} >Location: {donationArchiveItem.location}</Text>
             <Text variant="bodyMedium" style={styles.txtdetail} >Recipient Type: {donationArchiveItem.recipientType}</Text>
+            <Text variant="bodyMedium" style={styles.txtdetail} >Date: {donationArchiveItem.donationDate}</Text>
             <Text style={styles.details}>
               {donationArchiveItem.description}
             </Text>
