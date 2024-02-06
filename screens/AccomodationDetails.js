@@ -37,12 +37,13 @@ const LeftContent = ({ imageUrl }) => (
   <Image source={{ uri: imageUrl }} style={{ marginTop: 40, width: 100, height: 100, borderRadius: 15 }} />
 );
 
-export default function App() {
+export default function App({route}) {
   const navigation = useNavigation();
   const [accomodation, setAccomodation] = React.useState([{}]);
   const getAccomodationHelp = async () => {
     var userToken = await AsyncStorage.getItem('userToken');
-    const response = await axios.get('http://hopeconnect.somee.com/api/Accommodation/GetAllAccommodation', {
+    console.log(route.params.id);
+    const response = await axios.get('http://hopeconnect.somee.com/api/Recipient/GetRecipientByRecipientType?recipientType=' + route.params.id, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + userToken

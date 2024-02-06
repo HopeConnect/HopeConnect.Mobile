@@ -56,9 +56,10 @@ let [markers, setMarkers] = useState([
     lat:44.439663,
     long:26.096306,
   },
-
-  
-
+  {
+    lat: 37.0121964,
+    long: 35.2728561,
+  }
 ]);
 
 

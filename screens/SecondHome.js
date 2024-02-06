@@ -37,8 +37,7 @@ export default function App() {
      <Text style={styles.txttop}>Help Categories</Text>
 
      <TouchableOpacity   activeOpacity={0.5} 
-         onPress={() => navigation.navigate('FoodDetails')}
-     >
+         onPress={() => navigation.navigate('FoodDetails', {id: 1,})}>
       <Card style={styles.cardBox}>
           <Card.Title 
           right={RightContent1} 
@@ -48,7 +47,9 @@ export default function App() {
       </TouchableOpacity>
 
     <TouchableOpacity activeOpacity={0.5} 
-         onPress={() => navigation.navigate('ClothesDetails')}
+         onPress={() => navigation.navigate('ClothesDetails', {
+          id: 4,
+         })}
     >
       <Card style={styles.cardBox}>
         <Card.Title 
@@ -58,7 +59,9 @@ export default function App() {
     </TouchableOpacity>
 
     <TouchableOpacity activeOpacity={0.5} 
-         onPress={() => navigation.navigate('EducationDetails')}>
+         onPress={() => navigation.navigate('EducationDetails', {
+          id: 3,
+         })}>
       <Card style={styles.cardBox}>
         <Card.Title 
         right={RightContent3} 
@@ -67,7 +70,9 @@ export default function App() {
     </TouchableOpacity>
      
      <TouchableOpacity activeOpacity={0.5} 
-         onPress={() => navigation.navigate('AccomodationDetails')}>
+         onPress={() => navigation.navigate('AccomodationDetails', {
+          id: 2,
+         })}>
       <Card style={styles.cardBox}>
         <Card.Title right={RightContent4} left={LeftContent4} />
       </Card>

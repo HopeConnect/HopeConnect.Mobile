@@ -36,17 +36,17 @@ const LeftContent = props => <Image source={require("../assets/images/user.png")
 
 export default function App() {
   const navigation = useNavigation();
-  const [clothe, setClothe] = React.useState([{}]);
-  const getClotheHelp = async () => {
+  const [donationArchive, setDonationArchive] = React.useState([{}]);
+  const getDonationArchive = async () => {
     var userToken = await AsyncStorage.getItem('userToken');
-    const response = await axios.get('http://hopeconnect.somee.com/api/Clothe/GetAllClothe', {
+    const response = await axios.get('http://hopeconnect.somee.com/api/UserActivitiy/GetUserDonationArchive', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + userToken,
       },
     });
     if (response.data.responseCode === 200) {
-      setClothe(response.data.data);
+      setDonationArchive(response.data.data);
     }
     else
     {
@@ -55,7 +55,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    getClotheHelp();
+    getDonationArchive();
   }, []);
   return (
     <PaperProvider>
@@ -70,19 +70,19 @@ export default function App() {
           </View>
         </SafeAreaView>
         <Text style={styles.txttop}>Archive</Text>
-        {clothe && clothe.map((clotheItem, index) => (
+        {donationArchive && donationArchive.map((donationArchiveItem, index) => (
           <Card style={styles.cardBox} key={index}>
             <Card.Title  left={LeftContent} />
             <Card.Content>
               <Text variant="titleLarge" style={styles.txt}>
-                {clotheItem.title}       __________________________________
+                {donationArchiveItem.title}       __________________________________
               </Text>
             </Card.Content>
-            <Text variant="bodyMedium" style={styles.txtdetail} >Name: {clotheItem.name}</Text>
-            <Text variant="bodyMedium" style={styles.txtdetail} >Location: {clotheItem.location}</Text>
+            <Text variant="bodyMedium" style={styles.txtdetail} >Name: {donationArchiveItem.name}</Text>
+            <Text variant="bodyMedium" style={styles.txtdetail} >Location: {donationArchiveItem.location}</Text>
             {/* <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text> */}
             <Text style={styles.details}>
-              {clotheItem.description}
+              {donationArchiveItem.description}
             </Text>
            
           </Card>

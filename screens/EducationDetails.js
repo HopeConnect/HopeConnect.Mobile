@@ -25,12 +25,12 @@ const RightContent4 = props => <Text style={styles.txt}>Accomodation</Text>
 };
 */
 const LeftContent = props => <Image source={require("../assets/images/user.png")} style={{marginTop:15,width:60,height:60}}  />
-export default function App() {
+export default function App({route}) {
   const navigation = useNavigation();
   const [education, setEducation] = React.useState([{}]);
   const getEducationHelp = async () => {
     var userToken = await AsyncStorage.getItem('userToken');
-    const response = await axios.get('http://hopeconnect.somee.com/api/Education/GetAllEducation', {
+    const response = await axios.get('http://hopeconnect.somee.com/api/Recipient/GetRecipientByRecipientType?recipientType=' + route.params.id, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + userToken,

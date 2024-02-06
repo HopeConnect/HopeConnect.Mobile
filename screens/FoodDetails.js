@@ -34,16 +34,17 @@ const RightContent4 = props => <Text style={styles.txt}>Accomodation</Text>
 
 const LeftContent = props => <Image source={require("../assets/images/user.png")} style={{marginTop:15,width:60,height:60}}  />
 
-export default function App() {
+export default function App({route}) {
   const navigation = useNavigation();
   const [food, setFood] = React.useState([{}]);
   const getFoodHelp = async () => {
     var userToken = await AsyncStorage.getItem('userToken');
-    const response = await axios.get('http://hopeconnect.somee.com/api/Food/GetAllFood', {
+    console.log(route.params.id);
+    const response = await axios.get('http://hopeconnect.somee.com/api/Recipient/GetRecipientByRecipientType?recipientType=' + route.params.id, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${userToken}`,
-      },
+        'Authorization': `Bearer ${userToken}`
+      }
     });
     if (response.data.responseCode === 200) {
       setFood(response.data.data);
