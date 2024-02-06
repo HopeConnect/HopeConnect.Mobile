@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, GoogleProvider  } from 'react-native-maps';
 import { StatusBar } from 'expo-status-bar';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -42,7 +42,7 @@ export default function FindScreen() {
   return (
     <View style={styles.container}>
       <StatusBar style='auto' />
-      <MapView style={styles.map}>
+      <MapView style={styles.map} provider="google">
         {markers.map((marker, index) => (
           <Marker
             key={index}
