@@ -107,9 +107,6 @@ const styles = StyleSheet.create({
   cardBox:{
     margin:10,
     backgroundColor:'white',
-   
-    
-   
   },
 
   txt:{

@@ -32,8 +32,10 @@ const RightContent4 = props => <Text style={styles.txt}>Accomodation</Text>
 };
 */
 
-const LeftContent = props => <Image source={require("../assets/images/user.png")} style={{marginTop:15,width:60,height:60}}  />
-
+// const LeftContent = props => <Image source={require("../assets/images/user.png")} style={{marginTop:15,width:60,height:60}}  />
+const LeftContent = ({ imageUrl }) => (
+  <Image source={{ uri: imageUrl }} style={{ marginTop: 40, width: 100, height: 100, borderRadius: 15 }} />
+);
 export default function App({route}) {
   const navigation = useNavigation();
   const [food, setFood] = React.useState([{}]);
@@ -64,155 +66,42 @@ export default function App({route}) {
     });
     return unsubscribe;
   }, []);
+
   return (
     <PaperProvider>
-      <ScrollView style={styles.container}>
+     <ScrollView style={styles.container}>
         <SafeAreaView style={{ flex: 0}}>
           <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
             <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={{ backgroundColor: '#ff8d20', padding: 10, borderRadius: 50, marginLeft: 10 }}>
+              onPress={() => navigation.goBack()}
+              style={{ backgroundColor: '#ff8d20', padding: 10, borderRadius: 50, marginLeft: 10 }}>
               <ArrowLeftIcon size={23}  color="white" />
             </TouchableOpacity>
           </View>
         </SafeAreaView>
         <Text style={styles.txttop}>Food</Text>
         {food && food.map((foodItem, index) => (
-          <Card style={styles.cardBox} key={index}>
-            <Card.Title  left={LeftContent} />
-            <Card.Content>
-              <Text variant="titleLarge" style={styles.txt} key={index}>
-                {foodItem.title}     __________________________________
-              </Text>
-            </Card.Content>
-            <Text variant="bodyMedium" style={styles.txtdetail} >Name: {foodItem.name}</Text>
-            <Text variant="bodyMedium" style={styles.txtdetail} >Location: {foodItem.location}</Text>
-            {/* <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text> */}
-            <Text style={styles.details}>
-                {foodItem.description}
-            </Text>  
-            <TouchableOpacity  
-            onPress={() => navigation.navigate('Help', {Id: foodItem.id, type: 'Foods'})}
-            style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-                HELP
-              </Text>
-            </TouchableOpacity> 
+        <Card style={styles.cardBox} key={index}>
+          <Card.Title left={() => <LeftContent imageUrl={foodItem.imageUrl} />} />
+          <Card.Content>
+            <Text variant="titleLarge" style={styles.txt} key={index}>
+              {foodItem.title} ____________________________
+            </Text>
+          </Card.Content>
+          <Text variant="bodyMedium" style={styles.txtdetail} >Name: {foodItem.name} </Text>
+          <Text variant="bodyMedium" style={styles.txtdetail2} >Location: {foodItem.location}</Text>
+          <Text style={styles.details}>
+            {foodItem.description}
+          </Text> 
+          <TouchableOpacity  
+          onPress={() => navigation.navigate('Help', {Id: foodItem.id, type: 'Food'})}
+          style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
+              HELP
+            </Text>
+          </TouchableOpacity>  
         </Card>
         ))}
-
-    {/* <Card style={styles.cardBox}>
-      <Card.Title  left={LeftContent} />
-      <Card.Content>
-        <Text variant="titleLarge" style={styles.txt}>
-          John needs a meal urgently..
-          __________________________________
-
-        
-        
-          </Text>
-          
-    
-      </Card.Content>
-      <Text variant="bodyMedium" style={styles.txtdetail} >Name:</Text>
-      <Text variant="bodyMedium" style={styles.txtdetail} >Location:</Text>
-      <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>
-    
-      <Text style={styles.details}>
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          
-          </Text>
-  
-      
-          <TouchableOpacity  
-            onPress={() => navigation.navigate('Help')}
-              style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-                  HELP
-                </Text>
-              </TouchableOpacity>
-      
-    </Card>
-
-    
-
-    <Card style={styles.cardBox}>
-      <Card.Title  left={LeftContent} />
-      <Card.Content>
-        <Text variant="titleLarge" style={styles.txt}>
-          John needs a meal urgently..
-          __________________________________
-
-        
-        
-          </Text>
-          
-    
-      </Card.Content>
-      <Text variant="bodyMedium" style={styles.txtdetail} >Name:</Text>
-      <Text variant="bodyMedium" style={styles.txtdetail} >Location:</Text>
-      <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>
-    
-      <Text style={styles.details}>
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          
-          </Text>
-  
-      
-          <TouchableOpacity  
-          onPress={() => navigation.navigate('Help')}
-              style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-                  HELP
-                </Text>
-              </TouchableOpacity>
-      
-    </Card>
-
-    
-
-    <Card style={styles.cardBox}>
-      <Card.Title  left={LeftContent} />
-      <Card.Content>
-        <Text variant="titleLarge" style={styles.txt}>
-          John needs a meal urgently..
-          __________________________________
-
-        
-        
-          </Text>
-          
-    
-      </Card.Content>
-      <Text variant="bodyMedium" style={styles.txtdetail} >Name:</Text>
-      <Text variant="bodyMedium" style={styles.txtdetail} >Location:</Text>
-      <Text variant="bodyMedium" style={styles.txtdetail2} >Location:</Text>
-    
-      <Text style={styles.details}>
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          sdsadasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasddssdsd
-          
-          </Text>
-  
-      
-          <TouchableOpacity  
-            onPress={() => navigation.navigate('Help')}
-              style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-                  HELP
-                </Text>
-              </TouchableOpacity>
-      
-    </Card> */}
-        
       </ScrollView>
     </PaperProvider>
   );
@@ -221,51 +110,46 @@ export default function App({route}) {
 const styles = StyleSheet.create({
   cardBox:{
     margin:10,
-    backgroundColor:'white',     
+    backgroundColor:'white',
   },
-
   txt:{
-    marginTop:-50,
+    marginTop:-40,
     textAlign:'center',
     fontSize:18,
     color:'black',
     fontWeight: 'bold',
-    marginLeft:50
+    marginLeft:110
      
   },
-
-
   txttop:{
     marginLeft:20,
     fontSize:40,
     color:'black',
     marginBottom:20,
     fontWeight: 'bold',
-    textAlign:'center'
+    textAlign:'center',
+    color:'black'
   },
-
-
   txtdetail:{
     fontSize:18,
-    marginTop:15,
+    marginTop:39,
     marginLeft:10,
     fontWeight:'bold',
     color:'#ff8d20',
   },
-
   txtdetail2:{
     fontSize:15,
     fontWeight:'bold',
-    textAlign:'right',
-    marginRight:100
+    marginTop:10,
+    marginLeft:10,
+    // fontWeight:'bold',
+    // textAlign:'right',
+    // marginRight:100
   },
-
   details:{
     marginTop:11,
     textAlign:'center',
     padding:12
   }
-
-
-
 });
+
