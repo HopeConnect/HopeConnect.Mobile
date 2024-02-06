@@ -85,7 +85,7 @@ export default function App({route}) {
               {clotheItem.description}
             </Text>
             <TouchableOpacity  
-            onPress={() => navigation.navigate('Help', {Id: foodItem.id, type: 'Foods'})}
+            onPress={() => navigation.navigate('Help', {Id: clotheItem.id, type: 'Clothes'})}
             style={{ backgroundColor: '#ff8d20', borderRadius: 30, marginBottom:10, paddingVertical: 10, marginTop: 10 }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
                 HELP

@@ -56,6 +56,13 @@ export default function App() {
   useEffect(() => {
     getDonationArchive();
   }, []);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getDonationArchive();
+    });
+    return unsubscribe;
+}, []);
+
   return (
     <PaperProvider>
       <ScrollView style={styles.container}>
@@ -79,7 +86,7 @@ export default function App() {
             </Card.Content>
             <Text variant="bodyMedium" style={styles.txtdetail} >Name: {donationArchiveItem.name}</Text>
             <Text variant="bodyMedium" style={styles.txtdetail} >Location: {donationArchiveItem.location}</Text>
-            <Text variant="bodyMedium" style={styles.txtdetail} >Location: {donationArchiveItem.activityId}</Text>
+            <Text variant="bodyMedium" style={styles.txtdetail} >Recipient Type: {donationArchiveItem.recipientType}</Text>
             <Text style={styles.details}>
               {donationArchiveItem.description}
             </Text>

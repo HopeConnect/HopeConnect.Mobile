@@ -27,15 +27,15 @@ export default function SignUpScreen({route}) {
     setDonationAmount(cardValue);
   };
   const handleDonationAdd = async () => {
+    console.log(route.params.Id);
     var userToken = await AsyncStorage.getItem('userToken');
     const response = await axios.post('http://www.hopeconnect.somee.com/api/UserActivitiy/UserActivityAdd', {
       name: name,
       surname: surname,
       city: city,
       message: message,
-      activityId: parseInt(route.params.Id),
+      recipientId: parseInt(route.params.Id),
       donationAmount: parseFloat(donationAmount),
-      donationType: route.params.type,
     },
     {
       headers: {
