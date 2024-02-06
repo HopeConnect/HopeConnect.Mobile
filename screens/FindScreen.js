@@ -7,8 +7,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function FindScreen() {
   const [markers, setMarkers] = useState([{
-    latitude: 40.774021,
-    longitude: 29.918631,
+    latitude: 37.78825,
+    longitude: -122.4324,
+    title: 'Test Title',
+    description: 'Test Description'
   }]);
 
   const GetRecipientLatitudeAndLongitude = async () => {
@@ -19,10 +21,13 @@ export default function FindScreen() {
         'Authorization': 'Bearer ' + userToken
       },
     });
+    console.log(response.data);
     if (response.data.responseCode === 200) {
       const parsedMarkers = response.data.data.map(coord => ({
         latitude: parseFloat(coord.latitude),
-        longitude: parseFloat(coord.longitude)
+        longitude: parseFloat(coord.longitude),
+        title: coord.title,
+        description: coord.description
       }));
       setMarkers(parsedMarkers);
     } else {
@@ -45,6 +50,8 @@ export default function FindScreen() {
               latitude: marker.latitude,
               longitude: marker.longitude
             }}
+            title={marker.title}
+            description={marker.description}
           />
         ))}
       </MapView>
