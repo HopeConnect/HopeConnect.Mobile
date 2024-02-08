@@ -83,7 +83,7 @@ export default function LoginScreen() {
           <View style={{ marginBottom: 10 }}>
             <Text style={{ color: 'black', marginLeft: 10 }}>Email Address</Text>
             <TextInput
-              style={{ padding: 15, backgroundColor: '#F3F3F3', color: 'gray', borderRadius: 20, marginBottom: 10 }}
+              style={{ padding: 15, backgroundColor: '#F3F3F3', color: 'black', borderRadius: 20, marginBottom: 10 }}
               placeholder="john@gmail.com"
               onChangeText={(text) => setEmail(text)}
             />
@@ -91,7 +91,7 @@ export default function LoginScreen() {
           <View style={{ marginBottom: 20 }}>
             <Text style={{ color: 'black', marginLeft: 10 }}>Password</Text>
             <TextInput
-              style={{ padding: 15, backgroundColor: '#F3F3F3', color: 'gray', borderRadius: 20 }}
+              style={{ padding: 15, backgroundColor: '#F3F3F3', color: 'black', borderRadius: 20 }}
               secureTextEntry
               placeholder="test12345"
               onChangeText={(text) => setPassword(text)}

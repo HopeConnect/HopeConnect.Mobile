@@ -64,7 +64,7 @@ export default function App({route}) {
           <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
             <TouchableOpacity
               onPress={() => navigation.goBack()}
-              style={{ backgroundColor: '#ff8d20', padding: 10, borderRadius: 50, marginLeft: 10 }}>
+              style={{ backgroundColor: '#ff8d20', padding: 10,marginTop:10, borderRadius: 50, marginLeft: 10 }}>
               <ArrowLeftIcon size={23}  color="white" />
             </TouchableOpacity>
           </View>

@@ -14,6 +14,7 @@ import EducationDetails from '../screens/EducationDetails';
 import AccomodationDetails from '../screens/AccomodationDetails';
 import Help from '../screens/Help';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import EditProfile from '../screens/EditProfile';
 const Stack = createNativeStackNavigator();
 export default function AppNavigation() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
@@ -51,6 +52,7 @@ export default function AppNavigation() {
           <Stack.Screen name="EducationDetails" options={{headerShown: false}}  component={EducationDetails}/>
           <Stack.Screen name="AccomodationDetails" options={{headerShown: false}}  component={AccomodationDetails}/>
           <Stack.Screen name="Help" options={{headerShown: false}}  component={Help}/>
+          <Stack.Screen name="EditProfile" options={{headerShown: false}}  component={EditProfile}/>
         </Stack.Navigator>
       </NavigationContainer>
     );

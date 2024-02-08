@@ -6,12 +6,17 @@ import axios from "axios";
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import EditProfile from "./EditProfile";
 
 export default function App() {
     const navigation = useNavigation();
     const [baseImage, setBaseImage] = useState(null);
     const [user, setUser] = useState([]);
     const [donationCount, setDonationCount] = useState([0]);
+    const EditProfile = async () => {
+        
+        navigation.navigate('EditProfile');
+    };
     const handleGetUser = async () => {
         var userToken = await AsyncStorage.getItem('userToken');
         try 
@@ -167,7 +172,7 @@ export default function App() {
                     <Text style={[styles.text, { fontWeight: "200", fontSize: 20, marginLeft:10,marginTop:10, color:'#ff8d20'}]}>City:  <Text style={{color:'#52575D'}}>{user.city}</Text></Text>
                     <Text style={[styles.text, { fontWeight: "200", fontSize: 20, marginLeft:10,marginTop:10, color:'#ff8d20'}]}>Age: <Text style={{color:'#52575D'}}>{user.age}</Text></Text>
                 </View>
-                <TouchableOpacity
+                <TouchableOpacity onPress={EditProfile}
                 style={{ paddingVertical: 10, backgroundColor: '#ff8d20', marginHorizontal: 7, borderRadius: 20,marginTop:30  }}>
                     <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
                         <Ionicons name="create-outline"  size={24} color="white"></Ionicons>

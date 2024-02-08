@@ -26,6 +26,7 @@ export default DropdownComponent = () => {
  
     
     <View style={styles.container}>
+      
     
     <SafeAreaView >
         <View style={{ alignItems: 'center', justifyContent: 'center'}}>
