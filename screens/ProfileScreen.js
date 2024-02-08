@@ -4,10 +4,12 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
 import { useNavigation } from '@react-navigation/native';
-
+import * as ImagePicker from 'expo-image-picker';
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 export default function App() {
     const navigation = useNavigation();
+    const [baseImage, setBaseImage] = useState(null);
     const [user, setUser] = useState([]);
     const [donationCount, setDonationCount] = useState([0]);
     const handleGetUser = async () => {
@@ -85,6 +87,42 @@ export default function App() {
             console.log(error);
         }
     };
+    const handleProfileImageUpload = async () => {
+        var userToken = await AsyncStorage.getItem('userToken');
+        console.log("User Token: ", userToken);
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+            base64: true
+        });
+        if (!result.cancelled) {
+            setBaseImage(result.assets[0].base64);
+            var response = await axios.put('http://www.hopeconnect.somee.com/api/User/UpdateUserImage', 
+            {
+                imageBase64: baseImage
+            }, 
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${userToken}`,
+                }
+            });
+            if (response.data.responseCode === 200) {
+                // setUser({...user, userImageUrl: result.assets[0].uri});
+                handleGetUser();
+                console.log("Response: ", response.data.message);
+            }
+            else
+            {
+                console.log("Response: ", response.data.message);
+            }
+        }
+        else{
+            console.log("Cancelled");
+        }
+    };
     useEffect(() => {
         handleGetUser();
         handleGetDonationCount();
@@ -103,9 +141,9 @@ export default function App() {
                     <View style={styles.profileImage}>
                         <Image source={{uri: user.userImageUrl}} style={styles.image} resizeMode="center"></Image>
                     </View>
-                    <View style={styles.add}>
+                    <TouchableOpacity style={styles.add} onPress={handleProfileImageUpload}>
                         <Ionicons name="ios-add" size={48} color="white" style={{ marginTop: 2, marginLeft: 3,fontWeight:'bold' }}></Ionicons>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.infoContainer}>
                     <Text style={[styles.text, { fontWeight: "200", fontSize: 28 }]}>{user.fullName}</Text>
