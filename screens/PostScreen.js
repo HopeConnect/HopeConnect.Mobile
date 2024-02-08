@@ -6,6 +6,7 @@ import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 const data = [
   { label: 'Food', value: '1' },
@@ -31,6 +32,7 @@ export default DropdownComponent = () => {
         <Text style={styles.txttop}>Post</Text>  
         </View>
     </SafeAreaView>
+      
       
 
           <View style={styles.form}>   
@@ -77,6 +79,17 @@ export default DropdownComponent = () => {
         }}
       />
 
+
+            <TouchableOpacity
+              style={styles.signUpButton2} onPress={() => handleDonationAdd()}
+            >
+              <Text style={styles.signUpButtonText2}>
+              <Ionicons name="add"  size={25} color="gray"></Ionicons>
+                Choose File
+              </Text>
+            </TouchableOpacity>
+
+
           <TouchableOpacity
               style={styles.signUpButton} onPress={() => handleDonationAdd()}
             >
@@ -84,6 +97,8 @@ export default DropdownComponent = () => {
                 SEND
               </Text>
             </TouchableOpacity>
+
+
 
             
 
@@ -181,7 +196,7 @@ const styles = StyleSheet.create({
   input: {
     padding: 15,
     backgroundColor: '#F3F3F3',
-    color: 'gray',
+    color: 'black',
     borderRadius: 20,
     marginBottom: 10,
   
@@ -206,6 +221,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: 'white',
+  },
+  signUpButton2: {
+    backgroundColor: '#ff8d20',
+    borderRadius: 20,
+    paddingVertical: 15,
+    marginTop:-10,
+    padding: 15,
+    marginBottom:90,
+    backgroundColor: '#F3F3F3',
+    color: 'gray',
+  },
+  signUpButtonText2: {
+    fontSize: 18,
+    textAlign: 'center',
+    backgroundColor: '#F3F3F3',
+    color: 'gray',
   },
   orText: {
     fontSize: 20,

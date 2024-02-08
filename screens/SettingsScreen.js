@@ -66,15 +66,7 @@ export default function App() {
   return (
     <PaperProvider>
       <ScrollView style={styles.container}>
-        <SafeAreaView style={{ flex: 0}}>
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={{ backgroundColor: '#ff8d20', padding: 10, borderRadius: 50, marginLeft: 10 }}>
-              <ArrowLeftIcon size={23}  color="white" />
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
+        
         <Text style={styles.txttop}>Archive</Text>
         {donationArchive && donationArchive.map((donationArchiveItem, index) => (
           <Card style={styles.cardBox} key={index}>
@@ -121,7 +113,8 @@ const styles = StyleSheet.create({
     color:'black',
     marginBottom:20,
     fontWeight: 'bold',
-    textAlign:'center'
+    textAlign:'center',
+    marginTop:60
   },
 
 

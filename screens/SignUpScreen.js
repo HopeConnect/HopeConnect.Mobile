@@ -137,7 +137,7 @@ const styles = {
   input: {
     padding: 15,
     backgroundColor: '#F3F3F3',
-    color: 'gray',
+    color: 'black',
     borderRadius: 20,
     marginBottom: 10,
   },
