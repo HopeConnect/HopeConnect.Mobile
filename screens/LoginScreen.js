@@ -69,7 +69,7 @@ export default function LoginScreen() {
         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={{ backgroundColor: '#ff8d20', padding: 10, borderRadius: 50, marginLeft: 10 }}>
+            style={{ backgroundColor: '#ff8d20', padding: 10,marginTop:10, borderRadius: 50, marginLeft: 10 }}>
             <ArrowLeftIcon size={23}  color="white" />
           </TouchableOpacity>
         </View>
@@ -107,7 +107,7 @@ export default function LoginScreen() {
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={{marginTop:19, flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+          <View style={{marginTop:21, flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
   <View style={{ flex: 1, height: 0.5, backgroundColor: '#ff8d20', marginRight: 10 }} />
   <Text style={{ fontSize: 25, color: '#ff8d20', fontWeight: 'bold', textAlign: 'center' }}>
     Or

@@ -119,13 +119,14 @@ const styles = {
     padding: 10,
     borderRadius: 50,
     marginLeft: 10,
-    
+    marginTop:10
   },
   logo: {
     width: 175,
     height: 175,
    borderRadius:200,
-   marginBottom:-10
+   marginBottom:-10,
+   marginTop:30
   },
   form: {
     marginBottom: 20,

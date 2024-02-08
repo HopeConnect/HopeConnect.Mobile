@@ -173,7 +173,7 @@ export default function App() {
                     <Text style={[styles.text, { fontWeight: "200", fontSize: 20, marginLeft:10,marginTop:10, color:'#ff8d20'}]}>Age: <Text style={{color:'#52575D'}}>{user.age}</Text></Text>
                 </View>
                 <TouchableOpacity onPress={EditProfile}
-                style={{ paddingVertical: 10, backgroundColor: '#ff8d20', marginHorizontal: 7, borderRadius: 20,marginTop:30  }}>
+                style={{ paddingVertical: 10, backgroundColor: '#ff8d20', marginHorizontal: 7, borderRadius: 20,marginTop:40  }}>
                     <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
                         <Ionicons name="create-outline"  size={24} color="white"></Ionicons>
                         Edit Profile

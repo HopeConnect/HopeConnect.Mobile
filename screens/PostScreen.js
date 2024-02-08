@@ -82,7 +82,7 @@ export default DropdownComponent = () => {
 
 
             <TouchableOpacity
-              style={styles.signUpButton2} onPress={() => handleDonationAdd()}
+              style={styles.signUpButton2} 
             >
               <Text style={styles.signUpButtonText2}>
               <Ionicons name="add"  size={25} color="gray"></Ionicons>
