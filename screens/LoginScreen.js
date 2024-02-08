@@ -107,7 +107,7 @@ export default function LoginScreen() {
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={{marginTop:10, flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+          <View style={{marginTop:19, flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
   <View style={{ flex: 1, height: 0.5, backgroundColor: '#ff8d20', marginRight: 10 }} />
   <Text style={{ fontSize: 25, color: '#ff8d20', fontWeight: 'bold', textAlign: 'center' }}>
     Or
@@ -124,7 +124,7 @@ export default function LoginScreen() {
             </TouchableOpacity>
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-            <Text style={{ color: 'black', marginTop:-5}}>Don't have an account?</Text>
+            <Text style={{ color: 'gray',  marginTop:-5}}>Don't have an account?</Text>
             <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
               <Text style={{ fontWeight: 'bold', color: '#ff8d20',marginLeft:5,marginTop:-5, }}> Sign Up</Text>
             </TouchableOpacity>

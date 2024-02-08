@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
         height: 200,
         borderRadius: 200,
         overflow: "hidden",
-       marginTop:5
+       marginTop:25
     },
     dm: {
         backgroundColor: "#41444B",

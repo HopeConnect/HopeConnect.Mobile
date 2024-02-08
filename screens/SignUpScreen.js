@@ -85,7 +85,7 @@ export default function SignUpScreen() {
             </TouchableOpacity>
           </View>
           
-          <View style={{marginTop:19, flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+          <View style={{marginTop:20, flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
   <View style={{ flex: 1, height: 0.5, backgroundColor: '#ff8d20', marginRight: 10 }} />
   <Text style={{ fontSize: 25, color: '#ff8d20', fontWeight: 'bold', textAlign: 'center' }}>
     Or
@@ -176,7 +176,7 @@ const styles = {
   },
   loginText: {
     color: 'gray',
-    fontWeight: 'bold',
+    
   },
   loginLink: {
     fontWeight: 'bold',
