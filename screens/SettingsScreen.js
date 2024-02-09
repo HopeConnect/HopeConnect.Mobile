@@ -32,8 +32,10 @@ const RightContent4 = props => <Text style={styles.txt}>Accomodation</Text>
 };
 */
 
-const LeftContent = props => <Image source={require("../assets/images/user.png")} style={{marginTop:15,width:60,height:60}}  />
-
+// const LeftContent = props => <Image source={require("../assets/images/user.png")} style={{marginTop:15,width:60,height:60}}  />
+const LeftContent = ({ imageUrl }) => (
+  <Image source={{ uri: imageUrl }} style={{ marginTop: 40, width: 100, height: 100, borderRadius: 15 }} />
+);
 export default function App() {
   const navigation = useNavigation();
   const [donationArchive, setDonationArchive] = React.useState([{}]);
@@ -47,6 +49,7 @@ export default function App() {
     });
     if (response.data.responseCode === 200) {
       setDonationArchive(response.data.data);
+      console.log(response.data.data);
     }
     else
     {
@@ -70,16 +73,16 @@ export default function App() {
         <Text style={styles.txttop}>Archive</Text>
         {donationArchive && donationArchive.map((donationArchiveItem, index) => (
           <Card style={styles.cardBox} key={index}>
-            <Card.Title  left={LeftContent} />
+            <Card.Title left={() => <LeftContent imageUrl={donationArchiveItem.imageUrl} />} />
             <Card.Content>
               <Text variant="titleLarge" style={styles.txt}>
-                {donationArchiveItem.title}       __________________________________
+              {donationArchiveItem.title} ____________________________
               </Text>
             </Card.Content>
             <Text variant="bodyMedium" style={styles.txtdetail} >Name: {donationArchiveItem.name}</Text>
-            <Text variant="bodyMedium" style={styles.txtdetail} >Location: {donationArchiveItem.location}</Text>
+            <Text variant="bodyMedium" style={styles.txtdetail2} >Location: {donationArchiveItem.location}</Text>
             <Text variant="bodyMedium" style={styles.txtdetail} >Recipient Type: {donationArchiveItem.recipientType}</Text>
-            <Text variant="bodyMedium" style={styles.txtdetail} >Date: {donationArchiveItem.donationDate}</Text>
+            <Text variant="bodyMedium" style={styles.txtdetail2} >Date: {donationArchiveItem.donationDate}</Text>
             <Text style={styles.details}>
               {donationArchiveItem.description}
             </Text>
@@ -93,20 +96,17 @@ export default function App() {
 const styles = StyleSheet.create({
   cardBox:{
     margin:10,
-    backgroundColor:'white',     
+    backgroundColor:'white',
   },
-
   txt:{
-    marginTop:-50,
+    marginTop:-40,
     textAlign:'center',
     fontSize:18,
     color:'black',
     fontWeight: 'bold',
-    marginLeft:50
+    marginLeft:110
      
   },
-
-
   txttop:{
     marginLeft:20,
     fontSize:40,
@@ -114,13 +114,13 @@ const styles = StyleSheet.create({
     marginBottom:20,
     fontWeight: 'bold',
     textAlign:'center',
-    marginTop:60
+    color:'black'
   },
 
 
   txtdetail:{
     fontSize:18,
-    marginTop:15,
+    marginTop:35,
     marginLeft:10,
     fontWeight:'bold',
     color:'#ff8d20',
@@ -129,8 +129,11 @@ const styles = StyleSheet.create({
   txtdetail2:{
     fontSize:15,
     fontWeight:'bold',
-    textAlign:'right',
-    marginRight:100
+    marginTop:10,
+    marginLeft:10,
+    // fontWeight:'bold',
+    // textAlign:'right',
+    // marginRight:100
   },
 
   details:{
@@ -138,4 +141,6 @@ const styles = StyleSheet.create({
     textAlign:'center',
     padding:12
   }
+
 });
+
