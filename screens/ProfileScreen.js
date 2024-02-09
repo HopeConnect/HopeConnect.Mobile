@@ -30,6 +30,7 @@ export default function App() {
             });
             if (response.data.responseCode === 200) {
                 setUser(response.data.data);
+                console.log("Response: ", user);
             }
             else
             {

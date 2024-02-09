@@ -27,8 +27,9 @@ export default EditProfie = () => {
         'Authorization': 'Bearer ' + userToken
       }
     });
-    if (response.responseCode === 200) {
-      navigation.navigate('Profile');
+    console.log(response);
+    if (response.data.responseCode === 200) {
+      navigation.navigate('Tabs');
     }
     else {
       alert('Error', response.data.message);
