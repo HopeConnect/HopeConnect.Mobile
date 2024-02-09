@@ -38,6 +38,11 @@ export default function FindScreen() {
   useEffect(() => {
     GetRecipientLatitudeAndLongitude();
   }, []);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      GetRecipientLatitudeAndLongitude();
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
