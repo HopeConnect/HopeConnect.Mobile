@@ -9,9 +9,15 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 
 
-export default DropdownComponent = () => {
+export default EditProfile = () => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+
+  const [name, setName] = React.useState('');
+  const [surname, setSurname] = React.useState('');
+  const [country, setCountry] = React.useState('');
+  const [city, setAge] = React.useState('');
+  
 
   const navigation = useNavigation();
 
@@ -158,7 +164,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ff8d20',
     borderRadius: 20,
     paddingVertical: 15,
-    marginTop: 200,
+    marginTop: 150,
   },
   signUpButtonText: {
     fontSize: 18,
