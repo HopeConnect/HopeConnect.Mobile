@@ -13,6 +13,7 @@ export default function App() {
     const [baseImage, setBaseImage] = useState(null);
     const [user, setUser] = useState([]);
     const [donationCount, setDonationCount] = useState([0]);
+    const [helpNotificationCount, setHelpNotificationCount] = useState([0]);
     const EditProfile = async () => {
         
         navigation.navigate('EditProfile');
@@ -81,6 +82,29 @@ export default function App() {
             });
             if (response.data.responseCode === 200) {
                 setDonationCount(response.data.data);
+                navigation.navigate('Tabs');
+            }
+            else
+            {
+                console.log(response.data.message);
+            }
+        }
+        catch (error) 
+        {
+            console.log(error);
+        }
+    };
+    const handeGetUserHelpNtificationCount = async () => {
+        var userToken = await AsyncStorage.getItem('userToken');
+        try{
+            var response = await axios.get('http://www.hopeconnect.somee.com/api/UserActivitiy/GetUserHelpNotificationCount', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${userToken}`,
+                }
+            });
+            if (response.data.responseCode === 200) {
+                setHelpNotificationCount(response.data.data);
             }
             else
             {
@@ -91,7 +115,7 @@ export default function App() {
         {
             console.log(error);
         }
-    };
+    }
     const handleProfileImageUpload = async () => {
         var userToken = await AsyncStorage.getItem('userToken');
         console.log("User Token: ", userToken);
@@ -99,7 +123,7 @@ export default function App() {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 3],
-            quality: 1,
+            quality: 0.5,
             base64: true
         });
         if (!result.cancelled) {
@@ -131,11 +155,13 @@ export default function App() {
     useEffect(() => {
         handleGetUser();
         handleGetDonationCount();
+        handeGetUserHelpNtificationCount();
     }, []);
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             handleGetUser();
             handleGetDonationCount();
+            handeGetUserHelpNtificationCount();
         });
         return unsubscribe;
     }, []);
@@ -155,7 +181,7 @@ export default function App() {
                 </View>
                 <View style={styles.statsContainer}>
                     <View style={styles.statsBox}>
-                        <Text style={[styles.text, { fontSize: 24 }]}>483</Text>
+                        <Text style={[styles.text, { fontSize: 24 }]}>{helpNotificationCount}</Text>
                         <Text style={[styles.text, styles.subText]}>Help Notification</Text>
                     </View>
                     <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>

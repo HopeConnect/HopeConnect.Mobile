@@ -7,65 +7,120 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
-const data = [
-  { label: 'Food', value: '1' },
-  { label: 'Clothes', value: '2' },
-  { label: 'Education', value: '3' },
-  { label: 'Accomodation', value: '4' },
-];
-
-
-export default DropdownComponent = () => {
+export default PostScreen = () => {
+  const data = [
+    { label: 'Food', value: 1 },
+    { label: 'Clothes', value: 4 },
+    { label: 'Education', value: 3 },
+    { label: 'Accomodation', value: 2 },
+  ]; 
+  const [baseImage, setBaseImage] = useState(null);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-
-
-
+  const [fullName, setFullName] = useState('');
+  const [city, setCity] = useState('');
+  const [message, setMessage] = useState('');
+  const [title, setTitle] = useState('');
+  const navigation = useNavigation();
+  const YOUR_API_KEY = 'AIzaSyAWxvTpAiI5DXGWdbW54fOkJxqk6TsWLt4'; 
+  const getLocationCoordinates = async (locationName) => {
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=${YOUR_API_KEY}`
+      );
+      const data = await response.json();
+      if (data.results.length > 0) {
+        const { lat, lng } = data.results[0].geometry.location;
+        return { latitude: lat.toString(), longitude: lng.toString()};
+      } else {
+        throw new Error('Konum bulunamadı');
+      }
+    } catch (error) {
+      console.error('Hata:', error);
+      throw error;
+    }
+  };
+  const PickImage = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.5,
+      base64 : true
+    });
+    if (!result.cancelled) {
+      setBaseImage(result.assets[0].base64);
+    }
+  };
+  const handleDonationAdd = async () => {
+    try{
+      var userToken = await AsyncStorage.getItem('userToken');
+      const locationCoordinates = await getLocationCoordinates(city);
+      var response = await axios.post('http://www.hopeconnect.somee.com/api/Recipient/AddRecipient', {
+        base64Image: baseImage,  
+        title: title,
+        name: fullName,
+        location: city,
+        description: message,
+        recipientType: parseInt(value),
+        latitude: locationCoordinates.latitude,
+        longitude: locationCoordinates.longitude
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${userToken}`,
+        },
+      });
+      if (response.data.responseCode === 200) {
+        console.log(response.data.message);
+        navigation.navigate('Tabs');
+      }
+      else
+      {
+        console.log('Error: ', response.data.message);
+      }
+    }
+    catch (error) {
+      console.error('Error: ', error);
+    }
+  }
   return (
- 
-    
     <View style={styles.container}>
-      
-    
-    <SafeAreaView >
-        <View style={{ alignItems: 'center', justifyContent: 'center'}}>
-        <Text style={styles.txttop}>Post</Text>  
-        </View>
-    </SafeAreaView>
-      
-      
-
-          <View style={styles.form}>   
-            <TextInput
-              style={styles.input}
-              placeholder='Name'
-              onChangeText={text => setName(text)}
-            />    
-            <TextInput
-              style={styles.input}      
-              placeholder='Surname'
-              onChangeText={text => setSurname(text)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder='City'
-              onChangeText={text => setCity(text)}
-            />
-            <TextInput
-              style={styles.inputmsg}
-              placeholder='Message'
-              onChangeText={text => setMessage(text)}
-            />
+      <SafeAreaView >
+          <View style={{ alignItems: 'center', justifyContent: 'center'}}>
+          <Text style={styles.txttop}>Post</Text>  
           </View>
-      
+      </SafeAreaView>
+      <View style={styles.form}>   
+          <TextInput
+            style={styles.input}
+            placeholder='Title'
+            onChangeText={text => setTitle(text)}
+          /> 
+          <TextInput
+            style={styles.input}
+            placeholder='Full Name'
+            onChangeText={text => setFullName(text)}
+          />    
+          <TextInput
+            style={styles.input}
+            placeholder='City'
+            onChangeText={text => setCity(text)}
+          />
+          <TextInput
+            style={styles.inputmsg}
+            placeholder='Message'
+            onChangeText={text => setMessage(text)}
+          />
+      </View>
       <Dropdown
         style={[styles.dropdown,styles.input,styles.form, isFocus && { borderColor: '#ff8d20' }]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         containerStyle={styles.dropdownContainer}
         iconStyle={styles.iconStyle}
-        
         data={data}
         maxHeight={300}
         labelField="label"
@@ -79,50 +134,22 @@ export default DropdownComponent = () => {
           setIsFocus(false);
         }}
       />
-
-
-            <TouchableOpacity
-              style={styles.signUpButton2} 
-            >
-              <Text style={styles.signUpButtonText2}>
-              <Ionicons name="add"  size={25} color="gray"></Ionicons>
-                Choose File
-              </Text>
-            </TouchableOpacity>
-
-
-          <TouchableOpacity
-              style={styles.signUpButton} onPress={() => handleDonationAdd()}
-            >
-              <Text style={styles.signUpButtonText}>
-                SEND
-              </Text>
-            </TouchableOpacity>
-
-
-
-            
-
-    </View>
-
-    
+      <TouchableOpacity style={styles.signUpButton2} onPress={PickImage}>
+        <Text style={styles.signUpButtonText2}>
+          <Ionicons name="add"  size={25} color="gray"></Ionicons> Choose File
+          </Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.signUpButton} onPress={() => handleDonationAdd()} >
+        <Text style={styles.signUpButtonText}> SEND </Text> 
+      </TouchableOpacity>
+    </View>  
   );
 };
-
-
-
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     padding: 16,
     flex:1
-  },
-  backButton: {
-    backgroundColor: '#ff8d20',
-    padding: 10,
-    borderRadius: 50,
-    marginLeft: 10,
   },
   dropdown: {
     height: 50,
@@ -154,18 +181,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color:'#ff8d20'
   },
-  
-  
-  txttop:{
-    marginLeft:20,
-    fontSize:60,
-    color:'black',
-    fontWeight: 'bold',
-    textAlign:'center',
-    marginTop:-100
-  },
- 
-
   txt:{
     marginTop:25,
     marginRight:27,
@@ -173,26 +188,8 @@ const styles = StyleSheet.create({
     color:'black',
     fontWeight: 'bold',
   },
-
-  moneytxt:{
-    fontSize:25,
-    color:'black',
-    fontWeight: 'bold',
-  },
-
-
-  logo: {
-    width: 175,
-    height: 175,
-   borderRadius:200,
-   marginBottom:-10
-  },
   form: {
     marginBottom: 20,
-  },
-  formText: {
-    color: 'gray',
-    marginLeft: 10,
   },
   input: {
     padding: 15,
@@ -202,7 +199,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   
   },
-
   inputmsg: {
     padding: 15,
     height:90,
@@ -211,25 +207,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 10,
   },
-  signUpButton: {
-    backgroundColor: '#ff8d20',
-    borderRadius: 20,
-    paddingVertical: 15,
-    marginTop: 10,
-  },
-  signUpButtonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'white',
-  },
   signUpButton2: {
     backgroundColor: '#ff8d20',
     borderRadius: 20,
     paddingVertical: 15,
     marginTop:-10,
     padding: 15,
-    marginBottom:90,
     backgroundColor: '#F3F3F3',
     color: 'gray',
   },
@@ -239,30 +222,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3F3F3',
     color: 'gray',
   },
-  orText: {
-    fontSize: 20,
-    color: 'gray',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 15,
-  },
-
-  
-  loginTextContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  loginText: {
-    color: 'gray',
-    fontWeight: 'bold',
-  },
-  loginLink: {
-    fontWeight: 'bold',
-    color: '#ff8d20',
-    marginLeft:5,
-  },
-
-  
   txttop:{
     marginLeft:20,
     fontSize:40,
@@ -283,6 +242,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: 'white',
-  },
- 
+  }
 });
