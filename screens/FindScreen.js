@@ -4,8 +4,10 @@ import MapView, { Marker, GoogleProvider  } from 'react-native-maps';
 import { StatusBar } from 'expo-status-bar';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 export default function FindScreen() {
+  const navigation = useNavigation();
   const [markers, setMarkers] = useState([{
     latitude: 37.78825,
     longitude: -122.4324,

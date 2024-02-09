@@ -12,6 +12,7 @@ export default EditProfie = () => {
   const [age, setAge] = useState('');
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
+  const [user, setUser] = useState({});
   const navigation = useNavigation();
 
   const handleUpdateProfile = async () => {
@@ -35,6 +36,32 @@ export default EditProfie = () => {
       alert('Error', response.data.message);
     }
   };
+
+  const handleGetUser = async () => {
+    var userToken = await AsyncStorage.getItem('userToken');
+    try 
+    {
+        var response = await axios.get('http://hopeconnect.somee.com/api/User/GetUserByUserFirebaseId', {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userToken}`,
+            }
+        });
+        if (response.data.responseCode === 200) {
+            setUser(response.data.data);
+            console.log("Response: ", user);
+        }
+        else
+        {
+            console.log("Response: ", response.data.data);
+        }
+    }
+    catch (error) 
+    {
+        console.log(error);
+    }
+        
+};
 
   return (
     <View style={styles.container}>
