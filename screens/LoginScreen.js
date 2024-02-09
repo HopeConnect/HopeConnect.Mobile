@@ -69,13 +69,13 @@ export default function LoginScreen() {
         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={{ backgroundColor: '#ff8d20', padding: 10,marginTop:10, borderRadius: 50, marginLeft: 10 }}>
+            style={{ backgroundColor: '#ff8d20', padding: 10, borderRadius: 50, marginLeft: 10 }}>
             <ArrowLeftIcon size={23}  color="white" />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
       <SafeAreaView style={{ flex: 1, borderTopLeftRadius: 50, borderTopRightRadius: 50, backgroundColor: 'white' }}>
-        <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+        <View style={{ alignItems: 'center', justifyContent: 'center', }}>
           <Image source={require('../assets/images/hopelogo.jpeg')} style={{ width: 190, height: 190,borderRadius:200 }} />
         </View>
 
