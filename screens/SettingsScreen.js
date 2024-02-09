@@ -69,7 +69,6 @@ export default function App() {
   return (
     <PaperProvider>
       <ScrollView style={styles.container}>
-        
         <Text style={styles.txttop}>Archive</Text>
         {donationArchive && donationArchive.map((donationArchiveItem, index) => (
           <Card style={styles.cardBox} key={index}>
@@ -112,6 +111,7 @@ const styles = StyleSheet.create({
     fontSize:40,
     color:'black',
     marginBottom:20,
+    marginTop:43,
     fontWeight: 'bold',
     textAlign:'center',
     color:'black'
