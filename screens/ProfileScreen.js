@@ -58,7 +58,7 @@ export default function App() {
             });
             if (response.data.responseCode === 200) {
                 await AsyncStorage.removeItem('userToken');
-                navigation.navigate('Login');
+                navigation.navigate('Welcome');
             }
             else
             {
@@ -123,14 +123,14 @@ export default function App() {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 3],
-            quality: 0.5,
+            quality: 0.1,
             base64: true
         });
-        if (!result.cancelled) {
+        if (!result.canceled) {
             setBaseImage(result.assets[0].base64);
             var response = await axios.put('http://www.hopeconnect.somee.com/api/User/UpdateUserImage', 
             {
-                imageBase64: baseImage
+                imageBase64: result.assets[0].base64
             }, 
             {
                 headers: {
@@ -138,10 +138,12 @@ export default function App() {
                     Authorization: `Bearer ${userToken}`,
                 }
             });
+            console.log("Response: ", response.data);
             if (response.data.responseCode === 200) {
                 // setUser({...user, userImageUrl: result.assets[0].uri});
-                handleGetUser();
                 console.log("Response: ", response.data.message);
+                handleGetUser();
+                alert("Profile Image Updated Successfully");
             }
             else
             {
