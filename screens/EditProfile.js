@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeftIcon } from 'react-native-heroicons/solid';
@@ -6,22 +6,27 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default EditProfie = () => {
-  const [country, setCountry] = useState('');
-  const [city, setCity] = useState('');
-  const [age, setAge] = useState('');
-  const [name, setName] = useState('');
+export default EditProfile = () => {
   const [surname, setSurname] = useState('');
-  const [user, setUser] = useState({});
+  const [userData, setUserData] = useState({
+    fullName: '',
+    country: '',
+    city: '',
+    age: '',
+    email: '',
+    firebaseId: '',
+    userImageName: '',
+    userImageUrl: '',
+  });
   const navigation = useNavigation();
 
   const handleUpdateProfile = async () => {
     var userToken = await AsyncStorage.getItem('userToken');
     var response = await axios.put('http://hopeconnect.somee.com/api/User/UpdateProfile', {
-      fullName: name + ' ' + surname,
-      country: country,
-      city: city,
-      age: age
+      fullName: userData.fullName,  
+      country: userData.country,
+      city: userData.city,
+      age: userData.age
     }, 
     {
       headers: {
@@ -38,30 +43,27 @@ export default EditProfie = () => {
   };
 
   const handleGetUser = async () => {
-    var userToken = await AsyncStorage.getItem('userToken');
-    try 
-    {
-        var response = await axios.get('http://hopeconnect.somee.com/api/User/GetUserByUserFirebaseId', {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${userToken}`,
-            }
+    try {
+      const userToken = await AsyncStorage.getItem('userToken');
+      if (userToken) {
+        const response = await axios.get('http://hopeconnect.somee.com/api/User/GetUserByUserFirebaseId', {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
         });
-        if (response.data.responseCode === 200) {
-            setUser(response.data.data);
-            console.log("Response: ", user);
-        }
-        else
-        {
-            console.log("Response: ", response.data.data);
-        }
+        const user = response.data.data;
+        setUserData(user);
+      }
+    } catch{
+      alert('Error fetching user data');
     }
-    catch (error) 
-    {
-        console.log(error);
-    }
-        
-};
+  };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      handleGetUser();
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -85,28 +87,28 @@ export default EditProfie = () => {
       <View style={styles.form}>
         <TextInput
           style={styles.input}
-          placeholder='Name'
-          onChangeText={text => setName(text)}
+          placeholder='Full Name'
+          value={userData.fullName}
+          onChangeText={text => setUserData({...userData, fullName: text})}
         />    
-        <TextInput
-          style={styles.input}      
-          placeholder='Surname'
-          onChangeText={text => setSurname(text)}
-        />
+       
         <TextInput
           style={styles.input}
           placeholder='Country'
-          onChangeText={text => setCountry(text)}
+          value={userData.country}
+          onChangeText={text => setUserData({...userData, country: text})}
         />    
         <TextInput
           style={styles.input}      
           placeholder='City'
-          onChangeText={text => setCity(text)}
+          value={userData.city}
+          onChangeText={text => setUserData({...userData, city: text})}
         />
         <TextInput
           style={styles.input}
           placeholder='Age'
-          onChangeText={text => setAge(text)}
+          value={userData.age}
+          onChangeText={text => setUserData({...userData, age: text})}
         />
       </View>
 

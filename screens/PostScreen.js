@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons} from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 export default PostScreen = () => {
+  const navigation = useNavigation();
   const data = [
     { label: 'Food', value: 1 },
     { label: 'Clothes', value: 4 },
@@ -23,12 +23,12 @@ export default PostScreen = () => {
   const [city, setCity] = useState('');
   const [message, setMessage] = useState('');
   const [title, setTitle] = useState('');
-  const navigation = useNavigation();
-  const YOUR_API_KEY = 'AIzaSyAWxvTpAiI5DXGWdbW54fOkJxqk6TsWLt4'; 
+
+  const googleMapApiKey = 'AIzaSyAWxvTpAiI5DXGWdbW54fOkJxqk6TsWLt4'; 
   const getLocationCoordinates = async (locationName) => {
     try {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=${YOUR_API_KEY}`
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=${googleMapApiKey}`
       );
       const data = await response.json();
       if (data.results.length > 0) {
@@ -73,14 +73,21 @@ export default PostScreen = () => {
           'Authorization': `Bearer ${userToken}`,
         },
       });
-      if (response.data.responseCode === 200) {
-        console.log(response.data.message);
-        navigation.navigate('Tabs');
+      if (response.data.responseCode == 200)
+      {
+        setCity(null);
+        setFullName(null);
+        setMessage(null);
+        setTitle(null);
+        setValue(null);
+        setBaseImage(null);
+        navigation.navigate('SecondHome');
       }
       else
       {
         console.log('Error: ', response.data.message);
       }
+      console.log(response.data);
     }
     catch (error) {
       console.error('Error: ', error);

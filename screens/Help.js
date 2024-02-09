@@ -9,13 +9,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const LeftContent2 = props => <Image source={require("../assets/images/helping-hand.png")} style={{width:70,height:70,marginBottom:10,marginLeft:170,marginTop:10}}  />
-
-
-
 const RightContent1 = props => <Text style={styles.txt}>$25</Text>
 
 
-export default function SignUpScreen({route}) {
+export default function Help({route}) {
   const navigation = useNavigation();
   // const [selectedCard, setSelectedCard] = useState(null);
   const [name, setName] = useState('');

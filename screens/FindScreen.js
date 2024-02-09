@@ -23,7 +23,6 @@ export default function FindScreen() {
         'Authorization': 'Bearer ' + userToken
       },
     });
-    console.log(response.data);
     if (response.data.responseCode === 200) {
       const parsedMarkers = response.data.data.map(coord => ({
         latitude: parseFloat(coord.latitude),
