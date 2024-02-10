@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "TestAPP",
-    "slug": "TestAPP",
+    "name": "HopeConnectMobile",
+    "slug": "HopeConnectMobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
