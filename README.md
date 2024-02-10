@@ -1,9 +1,7 @@
 <br/>
 <p align="center">
   <a href="https://github.com/HopeConnect/HopeConnect Mobile">
-    <img src="HopeConnect.Api/Images/HopeConnectApi.png" alt="Logo" width="80" height="80">
     <img src="https://github.com/HopeConnect/HopeConnect.Api/blob/master/Images/hopelogo.png" alt="Logo" width="450" height="450">
-
   </a>
 
   <h3 align="center">HopeConnect Mobile</h3>
