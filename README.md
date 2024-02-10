@@ -11,10 +11,10 @@
     Let's Reach More People Together, Let's Spread More Hope Together: HopeConnect!
     <br/>
     <br/>
-    <a href="https://github.com/HopeConnect/HopeConnect Mobile"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/HopeConnect/HopeConnect.Mobile"><strong>Explore the docs »</strong></a>
     <br/>
     <br/>
-    <a href="https://github.com/HopeConnect/HopeConnect Mobile">View Demo</a>
+    <a href="https://github.com/HopeConnect/HopeConnect.Mobile">View Demo</a>
     .
   </p>
 </p>
