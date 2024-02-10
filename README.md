@@ -31,7 +31,7 @@
 
 ## About The Project
 
-![Screen Shot]<img src="https://github.com/HopeConnect/Readme.github/blob/main/AdvertismentImage/Advertismemt1.png" alt="Logo" width="1352" height="600">
+<img src="https://github.com/HopeConnect/Readme.github/blob/main/AdvertismentImage/Advertismemt1.png" alt="Logo" width="1352" height="600">
 ![Screen Shot](https://github.com/HopeConnect/Readme.github/blob/main/AdvertismentImage/Advertismemt2.png)
 ![Screen Shot](https://github.com/HopeConnect/Readme.github/blob/main/AdvertismentImage/Advertismemt3.png)
 
