@@ -1,7 +1,7 @@
 <br/>
 <p align="center">
   <a href="https://github.com/HopeConnect/HopeConnect Mobile">
-    <img src="https://github.com/HopeConnect/TestAPP/blob/main/assets/images/hopelogo.jpeg" alt="Logo" width="450" height="450" style="border-radius: 50%;">
+    <img src="https://github.com/HopeConnect/Readme.github/blob/main/AdvertismentImage/HopeConnectCircle.jpg" alt="Logo" width="450" height="450" style="border-radius: 50%;">
 
   </a>
 
