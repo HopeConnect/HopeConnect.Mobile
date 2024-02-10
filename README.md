@@ -32,10 +32,8 @@
 ## About The Project
 
 ![Screen Shot](https://github.com/HopeConnect/Readme.github/blob/main/AdvertismentImage/Advertismemt1.png)
-![Screen Shot]
-(https://github.com/HopeConnect/Readme.github/blob/main/AdvertismentImage/Advertismemt2.png)
-![Screen Shot]
-(https://github.com/HopeConnect/Readme.github/blob/main/AdvertismentImage/Advertismemt3.png)
+![Screen Shot](https://github.com/HopeConnect/Readme.github/blob/main/AdvertismentImage/Advertismemt2.png)
+![Screen Shot](https://github.com/HopeConnect/Readme.github/blob/main/AdvertismentImage/Advertismemt3.png)
 
 HopeConnect is a platform created to address urgent issues such as homelessness, hunger, and lack of education that millions of people worldwide encounter. It aims to alleviate difficulties in accessing basic necessities and provide support to those combating these problems.
 
