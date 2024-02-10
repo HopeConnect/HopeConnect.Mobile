@@ -159,7 +159,7 @@ We welcome contributions to improve and enhance HopeConnect. To contribute, foll
 
 8. License By contributing to HopeConnect, you agree that your contributions will be licensed under the MIT License of the project.
 
-### Creating A Pull Request
+
 
 
 
