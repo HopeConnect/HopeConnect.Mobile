@@ -74,7 +74,8 @@ HopeConnect aims to provide users with a secure, accessible, and effective assis
 
 ## Getting Started
 
-Thank you for your interest in contributing to HopeConnect! Below is a guide to help you get started with the project.
+Welcome to HopeConnect! We're thrilled to have you onboard. Below is a guide to help you get started with our project:
+
 
 1. Prerequisites
 Before you begin, ensure you have the following prerequisites installed on your local machine:
