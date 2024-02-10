@@ -76,7 +76,7 @@ return (
             <Card.Title left={() => <LeftContent imageUrl={donationArchiveItem.imageUrl} />} />
             <Card.Content>
               <Text variant="titleLarge" style={styles.txt}>
-              {donationArchiveItem.title} __
+              {donationArchiveItem.title} _______________________________
               </Text>
               <Text variant="bodyMedium" style={styles.txtdetail} >Name: {donationArchiveItem.name}</Text>
               <Text variant="bodyMedium" style={styles.txtdetail2} >Location: {donationArchiveItem.location}</Text>
