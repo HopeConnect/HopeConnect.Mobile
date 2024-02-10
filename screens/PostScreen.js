@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons} from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
+
 export default PostScreen = () => {
   const navigation = useNavigation();
   const data = [
@@ -94,12 +95,15 @@ export default PostScreen = () => {
     }
   }
   return (
-    <View style={styles.container}>
+   
+    <View style={styles.container} >
+     
       <SafeAreaView >
           <View style={{ alignItems: 'center', justifyContent: 'center'}}>
           <Text style={styles.txttop}>Post</Text>  
           </View>
       </SafeAreaView>
+   
       <View style={styles.form}>   
           <TextInput
             style={styles.input}
@@ -122,6 +126,7 @@ export default PostScreen = () => {
             onChangeText={text => setMessage(text)}
           />
       </View>
+     
       <Dropdown
         style={[styles.dropdown,styles.input,styles.form, isFocus && { borderColor: '#ff8d20' }]}
         placeholderStyle={styles.placeholderStyle}
@@ -150,6 +155,7 @@ export default PostScreen = () => {
         <Text style={styles.signUpButtonText}> SEND </Text> 
       </TouchableOpacity>
     </View>  
+   
   );
 };
 const styles = StyleSheet.create({

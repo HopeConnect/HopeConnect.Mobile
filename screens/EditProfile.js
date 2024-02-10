@@ -112,10 +112,13 @@ export default EditProfile = () => {
         />
       </View>
 
+      <Text style={styles.desceptxt}>* Click on the field you want to make changes</Text>
+
       <TouchableOpacity
         style={styles.signUpButton}
         onPress={() => handleUpdateProfile()}
       >
+       
         <Text style={styles.signUpButtonText}>
           SAVE
         </Text>
@@ -158,6 +161,14 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingVertical: 15,
     marginTop: 20,
+  },
+  desceptxt:{
+    fontSize:14,
+    textAlign:'left',
+    color:'#ff8d20',
+    fontWeight:'bold',
+    marginLeft:10,
+    marginBottom:30
   },
   signUpButtonText: {
     fontSize: 18,

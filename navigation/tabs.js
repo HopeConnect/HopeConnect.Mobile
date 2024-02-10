@@ -36,6 +36,7 @@ const Tabs = () => {
         <Tab.Navigator
         screenOptions={{
           tabBarShowLabel: false,
+          
           tabBarStyle: {
             position: 'absolute',
             bottom: 25,

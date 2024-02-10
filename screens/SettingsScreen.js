@@ -66,30 +66,38 @@ export default function App() {
     return unsubscribe;
 }, []);
 
-  return (
-    <PaperProvider>
-      <ScrollView style={styles.container}>
-        <Text style={styles.txttop}>Archive</Text>
-        {donationArchive && donationArchive.map((donationArchiveItem, index) => (
+return (
+  <PaperProvider>
+    <ScrollView style={styles.container}>
+      <Text style={styles.txttop}>Archive</Text>
+      {donationArchive && donationArchive.length > 0 ? (
+        donationArchive.map((donationArchiveItem, index) => (
           <Card style={styles.cardBox} key={index}>
             <Card.Title left={() => <LeftContent imageUrl={donationArchiveItem.imageUrl} />} />
             <Card.Content>
               <Text variant="titleLarge" style={styles.txt}>
-              {donationArchiveItem.title} ____________________________
+              {donationArchiveItem.title} __
+              </Text>
+              <Text variant="bodyMedium" style={styles.txtdetail} >Name: {donationArchiveItem.name}</Text>
+              <Text variant="bodyMedium" style={styles.txtdetail2} >Location: {donationArchiveItem.location}</Text>
+              <Text variant="bodyMedium" style={styles.txtdetail} >Recipient Type: {donationArchiveItem.recipientType}</Text>
+              <Text variant="bodyMedium" style={styles.txtdetail2} >Date: {donationArchiveItem.donationDate}</Text>
+              <Text style={styles.details}>
+                {donationArchiveItem.description}
               </Text>
             </Card.Content>
-            <Text variant="bodyMedium" style={styles.txtdetail} >Name: {donationArchiveItem.name}</Text>
-            <Text variant="bodyMedium" style={styles.txtdetail2} >Location: {donationArchiveItem.location}</Text>
-            <Text variant="bodyMedium" style={styles.txtdetail} >Recipient Type: {donationArchiveItem.recipientType}</Text>
-            <Text variant="bodyMedium" style={styles.txtdetail2} >Date: {donationArchiveItem.donationDate}</Text>
-            <Text style={styles.details}>
-              {donationArchiveItem.description}
-            </Text>
           </Card>
-        ))}
-      </ScrollView>
-    </PaperProvider>
-  );
+        ))
+      ) : (
+        <Card style={styles.cardBox}>
+          <Card.Content>
+            <Text style={styles.txtdetail3}>You haven't made any donations yet!</Text>
+          </Card.Content>
+        </Card>
+      )}
+    </ScrollView>
+  </PaperProvider>
+);
 }
 
 const styles = StyleSheet.create({
@@ -135,6 +143,14 @@ const styles = StyleSheet.create({
     // textAlign:'right',
     // marginRight:100
   },
+
+  txtdetail3:{
+    fontSize:18,
+    fontWeight:'bold',
+    textAlign:'center',
+    color:'#ff8d20'
+  },
+
 
   details:{
     marginTop:11,
