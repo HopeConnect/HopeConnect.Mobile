@@ -37,7 +37,8 @@ export default function LoginScreen() {
         }
         else
         {
-          alert('Error! :', response.data.message);
+          console.log(response.data.message)
+          alert("Error! " + response.data.message);
         }
       }
     }

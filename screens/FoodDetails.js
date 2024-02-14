@@ -36,7 +36,7 @@ const RightContent4 = props => <Text style={styles.txt}>Accomodation</Text>
 const LeftContent = ({ imageUrl }) => (
   <Image source={{ uri: imageUrl }} style={{ marginTop: 40, width: 100, height: 100, borderRadius: 15 }} />
 );
-export default function App({route}) {
+export default function FoodDetails({route}) {
   const navigation = useNavigation();
   const [food, setFood] = React.useState([{}]);
   const getFoodHelp = async () => {

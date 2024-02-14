@@ -42,7 +42,7 @@ if(imageUrl != null)
     return <Image source={require("../assets/images/user.png")} style={{marginTop:15,width:60,height:60}}  />
   }
 };
-export default function App({route}) {
+export default function ClothesDetails({route}) {
   const navigation = useNavigation();
   const [clothe, setClothe] = React.useState([{}]);
   const getClotheHelp = async () => {

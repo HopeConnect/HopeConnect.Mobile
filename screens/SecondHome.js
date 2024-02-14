@@ -27,7 +27,7 @@ const RightContent4 = props => <Text style={styles.txt}>Accomodation</Text>
 };
 */
 
-export default function App() {
+export default function SecondHome() {
   const navigation = useNavigation();
 
   return (

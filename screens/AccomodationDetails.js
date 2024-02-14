@@ -37,7 +37,7 @@ const LeftContent = ({ imageUrl }) => (
   <Image source={{ uri: imageUrl }} style={{ marginTop: 40, width: 100, height: 100, borderRadius: 15 }} />
 );
 
-export default function App({route}) {
+export default function AccomodationDetails({route}) {
   const navigation = useNavigation();
   const [accomodation, setAccomodation] = React.useState([{}]);
   const getAccomodationHelp = async () => {
